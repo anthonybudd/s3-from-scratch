@@ -1,0 +1,22 @@
+kind: Deployment    
+apiVersion: apps/v1   
+metadata:            
+  name: alpine-deployment    
+  labels:        
+    app: alpine    
+spec:            
+  replicas: 1    
+  selector:       
+    matchLabels: 
+      app: alpine
+  template:        
+    metadata:    
+      labels:    
+        app: alpine
+    spec:        
+      containers:    
+      - name: alpine
+        image: arm64v8/alpine
+        command:
+        - "sleep"
+        - "604800"
