@@ -7,7 +7,7 @@
 For the past few years I’ve been thinking about how I could build SaaS and deploy it on my own infrastructure without needing to use any cloud platforms like AWS or GCP. In this repo I document my progress on building a clone of AWS S3 that functions the same as S3 (automated bucket deployment, dynamically expanding volumes, security, etc) using an exclusively open-source technology stack.
 
 <p align="center">
-  <img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=1">
+  <img height="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=1">
 </p>
 
 ### Contents
