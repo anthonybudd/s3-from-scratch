@@ -7,10 +7,10 @@
 For the past few years I’ve been thinking about how I could build SaaS and deploy it on my own infrastructure without needing to use any cloud platforms like AWS or GCP. In this repo I document my progress on building a clone of AWS S3 that functions the same as S3 (automated bucket deployment, dynamically expanding volumes, security, etc) using an exclusively open-source technology stack.
 
 <p align="center">
-  <img height="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=4">
+  <img src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=4">
 </p>
 
-### Contents
+### Sections
 - [Console](./console/ReadMe.md)
 - [Nodes](./node/ReadMe.md)
 - [Network](./network/ReadMe.md)
@@ -19,15 +19,15 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [K3s - Storage Cluster](./k3s/storage-cluster.md)
 
 ### Notes
-Because this is still very much a work-in-progress you will see my notes "_AB:_" throughout, please ignore.
+Because this is still very much a work-in-progress you will see my notes in italic "_AB:_" throughout, please ignore.
 
-You will need to SSH into multiple devices simaltanioulsy I have added an annotation (ecample:`[Console]`) to all commands in this repo, to show where you should be exeuting each command. Generally you will see `[Dev]`, `[Console]` and `[Node X]`
+You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Dev]`, `[Console]` and `[Node X]`
 
 
 ### Technical Overview
 
 #### [Console](./console/ReadMe.md)
-<img height="200" align="right" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/console.png">
+<img height="200" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/console-close-up.png">
 We will need a "console" so we can locally interact with the infrastructure. I have tried using a Raspberry Pi with a monitor and keyboard attached but I have found that using an old MacBook Pro works best for this. In this section I explain how to set-up the console so you can use it to store secrets, manage the network, provision K3s clusters and deploy pods.
 
 #### [Node](./node/ReadMe.md)
