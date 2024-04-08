@@ -1,16 +1,16 @@
 # GitLab
 
 First you will need to build a single node. Flash the SD card with a copy of 32-bit Raspberry Pi OS 11 (bullseye). At time of writing, GitLab-CE is not supported on later versions of Raspberry Pi OS or running on a 64-bit OS. Set the hostname to `gitlab`.
-<img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-32-bit.png">
+<img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-32-bit.png?v=1">
 
 Source: [https://about.gitlab.com/install/#raspberry-pi-os](https://about.gitlab.com/install/#raspberry-pi-os)
 
 ### Hint: Add `arm_64bit=0` to config.txt
 For some insane reason when you select 32-bit Raspberry Pi OS in Raspberry Pi imager you actually get [a 32-bit userland on top of a 64-bit kernel.](https://github.com/raspberrypi/rpi-imager/issues/847#issuecomment-2035800759) This will cause issues with GitLab runner later.
 
-[gitlab-org/gitlab-runner issue:37336](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/37336)
-[raspberrypi/rpi-imager issue:847](https://github.com/raspberrypi/rpi-imager/issues/847)
-[R Pi Docs: arm_64bit](https://www.raspberrypi.com/documentation/computers/config_txt.html#arm_64bit)
+- [gitlab-org/gitlab-runner issue:37336](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/37336)
+- [raspberrypi/rpi-imager issue:847](https://github.com/raspberrypi/rpi-imager/issues/847)
+- [R Pi Docs: arm_64bit](https://www.raspberrypi.com/documentation/computers/config_txt.html#arm_64bit)
 
 Insert the SD card and boot the pi. From the console SSH into the GitLab node using your password. 
 ```[Console] ssh gitlab@10.0.0.XXX```
