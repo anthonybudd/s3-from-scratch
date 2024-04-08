@@ -2,7 +2,8 @@
 
 First you will need to build a single node. Flash the SD card with a copy of 32-bit Raspberry Pi OS 11 (bullseye). At time of writing, GitLab-CE is not supported on later versions of Raspberry Pi OS or running on a 64-bit OS. Set the hostname to `gitlab`.
 <img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-32-bit.png">
-[https://about.gitlab.com/install/#raspberry-pi-os](https://about.gitlab.com/install/#raspberry-pi-os)
+
+Source: [https://about.gitlab.com/install/#raspberry-pi-os](https://about.gitlab.com/install/#raspberry-pi-os)
 
 ### Hint: Add `arm_64bit=0` to config.txt
 For some insane reason when you select 32-bit Raspberry Pi OS in Raspberry Pi imager you actually get [a 32-bit userland on top of a 64-bit kernel.](https://github.com/raspberrypi/rpi-imager/issues/847#issuecomment-2035800759) This will cause issues with GitLab runner later.
@@ -110,7 +111,7 @@ Create a new GitLab runner by going to __Admin Area -> CI/CD -> Runners -> New i
 
 Make a note of the token, you will need this to register the runner.
 
-<img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/new-gitlab-runner.jpg">
+<img width="600" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/new-gitlab-runner.jpg">
 
 
 
@@ -192,4 +193,4 @@ build-job:
 
 This should trigger a build job. In the sidebar go to __Build -> Jobs__ and open the latest job. You should see that the `script` section in the ci file has successfully been called inside the repo. This shows that GitLab and GitLab runner are working as expected. You can delete the test repo.
 
-<img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-job.jpg">
+<img width="600" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-job.jpg">
