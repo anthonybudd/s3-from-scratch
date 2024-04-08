@@ -14,7 +14,7 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [Console](./sections/console.md)
 - [Nodes](./sections/node.md)
 - [Network](./sections/network.md)
-- [Source Control: Gitlab](./sections/gitlab.md)
+- [Source Control: GitLab](./sections/gitlab.md)
 - [K3s: Production Cluster](./k3s/production-cluster.md)
 - [K3s: Storage Cluster](./k3s/storage-cluster.md)
 
