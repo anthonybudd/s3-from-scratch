@@ -11,12 +11,12 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 </p>
 
 ### Sections
-- [Console](./console/ReadMe.md)
-- [Nodes](./node/ReadMe.md)
-- [Network](./network/ReadMe.md)
-- [Source Control](./gitlab/ReadMe.md)
-- [K3s - Production Cluster](./k3s/production-cluster.md)
-- [K3s - Storage Cluster](./k3s/storage-cluster.md)
+- [Console](./sections/console.md)
+- [Nodes](./sections/node.md)
+- [Network](./sections/network.md)
+- [Source Control: Gitlab](./sections/gitlab.md)
+- [K3s: Production Cluster](./k3s/production-cluster.md)
+- [K3s: Storage Cluster](./k3s/storage-cluster.md)
 
 ### Notes
 Because this is still very much a work-in-progress you will see my notes in italics "_AB:_" throughout, please ignore.

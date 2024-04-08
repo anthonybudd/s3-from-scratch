@@ -42,17 +42,17 @@ SSH back into the console, this should not ask for a password.
 Source: [https://brew.sh/](https://brew.sh/)
 
 ### Install Ansible
-[Console] `brew install ansible`
+```[Console] brew install ansible```
 
 ### Install Kubectl
-[Console] `brew install kubectl`
+```[Console] brew install kubectl```
 
 ### Install Pass
 Pass is a CLI password manager, we will use this to securley manage the secrets for the infrastructure.
 [Console] `brew install pass`
 Source: [https://www.passwordstore.org/](https://www.passwordstore.org/)
 
-We can create passwords now using the folling command
+We can create passwords now using the following command
 ```bash
 pass generate node1/root 15
 AccIEuEvvTXNgaQ
@@ -61,7 +61,7 @@ AccIEuEvvTXNgaQ
 ### Alias & ENV
 To make life easier, add an environment variable and an alias command for each of the nodes in your infrastructure.
 
-[Console] `nano ~/.zshrc`
+```[Console] nano ~/.zshrc```
 
 
 ```
