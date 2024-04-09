@@ -5,23 +5,27 @@ First you will need to build a single node. Flash the SD card with a copy of 32-
 
 Source: [https://about.gitlab.com/install/#raspberry-pi-os](https://about.gitlab.com/install/#raspberry-pi-os)
 
-### Hint: Add `arm_64bit=0` to config.txt
+### Add `arm_64bit=0` to config.txt
 For some insane reason when you select 32-bit Raspberry Pi OS in Raspberry Pi imager you actually get [a 32-bit userland on top of a 64-bit kernel.](https://github.com/raspberrypi/rpi-imager/issues/847#issuecomment-2035800759) This will cause issues with GitLab runner later.
 
 - [gitlab-org/gitlab-runner issue:37336](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/37336)
 - [raspberrypi/rpi-imager issue:847](https://github.com/raspberrypi/rpi-imager/issues/847)
 - [R Pi Docs: arm_64bit](https://www.raspberrypi.com/documentation/computers/config_txt.html#arm_64bit)
 
+### Boot
 Insert the SD card and boot the pi. From the console SSH into the GitLab node using your password. 
+
 ```[Console] ssh gitlab@10.0.0.XXX```
 
 If you connect successfully, add the console's key to authorized key file onto the GitLab node to enable passwordless public-key authentication.
+
 ```[Console] ssh-copy-id gitlab@10.0.0.XXX```
 
-Hint: Save the root password for the GitLab node in pass 
+__Hint:__ Save the root password for the GitLab node in pass 
+
 ```[Console] pass insert gitlab```
 
-### Hint: Make an alias
+__Hint:__ Make an alias
 ```
 [Console] nano ~/.zshrc
 
@@ -50,9 +54,11 @@ _AB:_ https://docs.gitlab.com/ee/security/index.html
 From your dev machine you should be able to access gitlab at https://gitlab.local
 
 You can get the root password by running this command on the GitLab node.
+
 ```[GitLab Node] sudo cat /etc/gitlab/initial_root_password```
 
 Use pass to generate a new password and update the GitLab root account with the new password.
+
 ```[Console] pass generate gitlab/gitlab-app-root 30```
 
 ### Create a new user
@@ -61,6 +67,7 @@ Create a new user by going to __Admin Area -> Overview -> Users -> New user__
 Becasue we have not set-up internet we will need to set this users password using the CLI
 
 ```[GitLab Node] sudo gitlab-rake "gitlab:password:reset[sidneyjones]"```
+
 __Hint:__ This command might hang for 5mins before it prompts you to enter a password. IDK why this happens.
 
 
@@ -129,7 +136,7 @@ cd /etc/gitlab/ssl/
 sudo mv gitlab.local.key /tmp
 sudo mv gitlab.local.crt /tmp
 
-openssl req -nodes -new -x509 -sha256 -keyout gitlab.local.key -out gitlab.local.crt -days 356 -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=gitlab.local" -addext "subjectAltName = DNS:localhost,DNS:gitlab.local"
+sudo openssl req -nodes -new -x509 -sha256 -keyout gitlab.local.key -out gitlab.local.crt -days 356 -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=*.gitlab.local" -addext "subjectAltName = DNS:localhost,DNS:gitlab.local"
 ```
 Source: [https://docs.gitlab.com/runner/configuration/tls-self-signed.html](https://docs.gitlab.com/runner/configuration/tls-self-signed.html)
 
@@ -144,10 +151,13 @@ gitlab-runner register \
 ```
 
 Finally start GitLab runner with
+
 ```[GitLab Node] sudo gitlab-runner run --config /etc/gitlab-runner/config.toml```
 
-### Add `network_mode = "host"` to config.toml
+### Add `network_mode` and `volumes` to config.toml
 Because we are using a local instance of GitLab you will need to add `network_mode = "host"` to the `[runners.docker]` section of the GitLab config file located at `/etc/gitlab-runner/config.toml`
+
+You will also need to add `volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]`
 
 ```toml
 concurrent = 1
@@ -167,10 +177,13 @@ shutdown_timeout = 0
     MaxUploadedArchiveSize = 0
   [runners.docker]
     ...
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
     network_mode = "host"
     ...
 ```
 Source: [https://gitlab.com/gitlab-org/gitlab-runner/-/issues/305](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/305)
+
+
 
 
 ### Create a test repo

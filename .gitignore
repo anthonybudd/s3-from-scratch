@@ -1,3 +1,4 @@
 secrets.md
 *.crt
 *.k8s
+website/

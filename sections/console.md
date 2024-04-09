@@ -1,10 +1,9 @@
 # Console
-The console will be the primaryy deveice for working wth the infratsurue
+The console will be the device we use for interacting with the infrastructure.
 
-USB netwokr, securty reasons
+_AB: USB networking, security reasons_
 
-Whenever you are not working with the infrastrutre unplug the power and disconnect the netowk adpert ftom the MacBook
-
+Whenever you are not working with the infrastructure unplug the power and disconnect the network adapter from the MacBook
 ### MacBook Set-up
 Do a standard MacBook Pro set-up.
 
@@ -17,7 +16,7 @@ Do a standard MacBook Pro set-up.
 
 Additionally you should
 - Disable wifi
-- Prevent sleep while pluggedin
+- Prevent sleep while plugged-in
 
 ### SSH
 From your work computer SSH into the console to confirm everything is set-up correctly. 
@@ -49,7 +48,9 @@ Source: [https://brew.sh/](https://brew.sh/)
 
 ### Install Pass
 Pass is a CLI password manager, we will use this to securley manage the secrets for the infrastructure.
-[Console] `brew install pass`
+
+```[Console] brew install pass```
+
 Source: [https://www.passwordstore.org/](https://www.passwordstore.org/)
 
 We can create passwords now using the following command
