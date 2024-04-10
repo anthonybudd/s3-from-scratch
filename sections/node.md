@@ -5,6 +5,8 @@
 ### Default Set-up Procedure
 By default always do the following set-up procedure when creating a new node.
 
+Unless otherwise specified always flash the SD card with 64-bit Raspberry Pi OS Lite.
+
 #### Public Key Auth
 ```[Console] ssh-copy-id node@10.0.0.XXX```
 
