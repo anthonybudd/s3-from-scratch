@@ -13,10 +13,11 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 ### Sections
 - [Console](./sections/console.md)
 - [Nodes](./sections/node.md)
-- [Networking](./sections/networking.md)
 - [Source Control: GitLab](./sections/gitlab.md)
 - [K3s: Production Cluster](./sections/production-cluster.md)
+- [Deploying From GitLab Registry To Prod K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
 - [K3s: Storage Cluster](./sections/storage-cluster.md)
+<!-- - [Networking](./sections/networking.md) -->
 
 ### Notes
 You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Dev]`, `[Console]` and `[Node X]`.
@@ -34,7 +35,7 @@ We will need a "console" so we can locally interact with the infrastructure. I h
 
 Since this project needs to be "Enterprise-grade" we need a distinct and replicable compute unit which I call a "node". A node is a Raspberry Pi with a 1TB SSD and POE hat. I have also 3D printed a rack-mount solution for easy install into the rack. 
 
-#### [Networking](./sections/network.md)
+#### [Networking](./sections/networking.md)
 <img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
 We will need a network for the nodes to communicate. For the a router I have chosen OpenWRT. This allows me to use a Raspberry Pi with a USB 3.0 Ethernet adapter so it can work as as a router between the internet and the “datacenter”.
 
