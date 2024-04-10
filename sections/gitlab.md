@@ -92,10 +92,9 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/raspbian \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
 sudo apt-get update
-
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
 sudo docker run hello-world
 ```
 Source: [https://docs.docker.com/engine/install/raspberry-pi-os/](https://docs.docker.com/engine/install/raspberry-pi-os/)
@@ -227,17 +226,11 @@ stages:
   - build
 
 build-job:
-  image: docker:dind
   stage: build
-  services:
-    - docker:dind
-  variables:
-    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   script:
-    - unset DOCKER_HOST
-    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - echo "Compiling the code..."
+    - pwd
+    - ls
 ```
 
 Commiting this file should trigger a build job. In the sidebar go to __Build -> Jobs__ and open the latest job. You should see that the `script` section in the ci file has successfully been called inside the repo. This shows that GitLab and GitLab runner are working as expected. You can delete the test repo.

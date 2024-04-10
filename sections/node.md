@@ -3,7 +3,7 @@
 <img height="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/node.png">
 
 ### Default Set-up Procedure
-By default always do the following set-up procedure when crating a new node.
+By default always do the following set-up procedure when creating a new node.
 
 #### Public Key Auth
 ```[Console] ssh-copy-id node@10.0.0.XXX```
