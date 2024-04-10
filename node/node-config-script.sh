@@ -1,11 +1,8 @@
 #!/bin/bash
 
 # Update
-read -p $'\n[+] Update? ' update
-if [ "$update" = 'y' ] || [ "$update" = 'yes' ] ; then
-    sudo apt update -y
-    sudo apt full-upgrade -y
-fi
+sudo apt update -y
+sudo apt full-upgrade -y
 
 # open-iscsi
 read -p $'\n[+] Install open-iscsi? ' openiscsi
@@ -46,4 +43,3 @@ if [ "$ssh" = 'y' ] || [ "$ssh" = 'yes' ] ; then
 fi
 
 echo $'\n[+] Config Complete!'
-echo $'\nRun: sudo reboot'

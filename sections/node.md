@@ -1,23 +1,12 @@
 # Node
 
-_AB: These are just notes this section is still in active development_
+<img height="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/node.png">
 
-### Default
-By default always do the following when crating a new node
+### Default Set-up Procedure
+By default always do the following set-up procedure when crating a new node.
 
+#### Public Key Auth
 ```[Console] ssh-copy-id node@10.0.0.XXX```
-
-### Run Node Config
-SCP the [node-config-script.sh](./../node/node-config-script.sh) to the node and run it. This script will add some secureity changes to SSH and install Fail2Ban.
-
-```sh
-[Console] scp ./node/node-config-script.sh node@10.0.0.XXX:~
-[Console] ssh node@10.0.0.XXX
-[Node X] sudo ~/node-config-script.sh
-```
-
-_AB: Is this enough? What more SSH changes should I make to improve security?_
-
 
 #### Enable cpuset
 ```sh
@@ -33,3 +22,21 @@ cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
 dtoverlay=disable-wifi
 dtoverlay=disable-bt
 ```
+
+#### Run `node-config-script.sh`
+This script will add some security changes to SSH and install Fail2Ban.
+
+SCP the [node-config-script.sh](./../node/node-config-script.sh) to the node and run it. 
+
+_AB: Fail2Ban Config?_
+
+_AB: Test Fail2Ban_
+
+```sh
+[Console] scp ./node/node-config-script.sh node@10.0.0.XXX:~
+[Console] ssh node@10.0.0.XXX
+[Node X] sudo ~/node-config-script.sh
+[Node X] sudo reboot
+```
+
+_AB: Is this enough? What more SSH changes should I make to improve security?_
