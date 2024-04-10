@@ -23,7 +23,7 @@ _AB: Is this enough? What more SSH changes should I make to improve security?_
 ```sh
 [Node X] sudo nano /boot/firmware/cmdline.txt
 
-cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
+cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory 
 ```
 
 #### Disable WiFi & Bluetoooth

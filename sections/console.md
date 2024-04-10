@@ -20,18 +20,21 @@ Additionally you should
 
 ### SSH
 From your work computer SSH into the console to confirm everything is set-up correctly. 
+
 ```
-[Work] ssh Console@10.0.0.XXX
+[Dev] ssh Console@10.0.0.XXX
 ```
 
 Copy your SSH ID to the console so we can use public key authentication
+
 ```sh
-[Work] ssh-copy-id Console@10.0.0.XXX
+[Dev] ssh-copy-id Console@10.0.0.XXX
 ```
 
 SSH back into the console, this should not ask for a password.
+
 ```sh
-[Work] ssh Console@10.0.0.XXX
+[Dev] ssh Console@10.0.0.XXX
 ```
 
 ### Install Homebrew
@@ -62,10 +65,9 @@ AccIEuEvvTXNgaQ
 ### Alias & ENV
 To make life easier, add an environment variable and an alias command for each of the nodes in your infrastructure.
 
-```[Console] nano ~/.zshrc```
+```[Console] nano ~/.zshrc
 
 
-```
 export SSHN1=10.0.0.XXX
 alias sshn1="ssh node@$SSHN1"
 

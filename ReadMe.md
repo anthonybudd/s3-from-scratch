@@ -19,10 +19,9 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [K3s: Storage Cluster](./sections/storage-cluster.md)
 
 ### Notes
-Because this is still very much a work-in-progress you will see my notes in italics "_AB:_" throughout, please ignore.
-
 You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Dev]`, `[Console]` and `[Node X]`.
 
+Because this is still very much a work-in-progress you will see my notes in italics "_AB:_" throughout, please ignore.
 
 ### Technical Overview
 
@@ -36,11 +35,11 @@ We will need a "console" so we can locally interact with the infrastructure. I h
 Since this project needs to be "Enterprise-grade" we need a distinct and replicable compute unit which I call a "node". A node is a Raspberry Pi with a 1TB SSD and POE hat. I have also 3D printed a rack-mount solution for easy install into the rack. 
 
 #### [Networking](./sections/network.md)
-<img height="100" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
+<img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
 We will need a network for the nodes to communicate. For the a router I have chosen OpenWRT. This allows me to use a Raspberry Pi with a USB 3.0 Ethernet adapter so it can work as as a router between the internet and the “datacenter”.
 
 #### [Source Control](./sections/gitlab.md)
-<img height="100" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-logo.svg">
+<img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-logo.svg">
 We will need a way to store the code for the landing website, the front-end app and the back-end REST API. We  will also need CI/CD to compile the code and deploy it into our infrastructure. GitLab will work perfectly for these two tasks.
 
 #### Automation
