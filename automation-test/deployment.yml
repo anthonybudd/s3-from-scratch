@@ -1,0 +1,33 @@
+kind: Deployment    
+apiVersion: apps/v1   
+metadata:            
+  name: automation-test-deployment    
+  labels:        
+    app: automation-test    
+spec:            
+  replicas: 1    
+  selector:       
+    matchLabels: 
+      app: automation-test
+  template:        
+    metadata:    
+      labels:    
+        app: automation-test
+    spec:   
+      volumes:
+        - name: storage-cluster-config
+          secret:
+            secretName: storage-cluster-config     
+      containers:    
+      - name: automation-test
+        image: gitlab.local:5050/anthonybudd/automation-test:master
+        imagePullPolicy: Always    
+        ports:
+          - containerPort: 80
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]
+        volumeMounts:
+          - name: storage-cluster-config
+            mountPath: "/root/config"
+            subPath: config
+        

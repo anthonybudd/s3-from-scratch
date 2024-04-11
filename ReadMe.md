@@ -17,6 +17,7 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [K3s: Production Cluster](./sections/production-cluster.md)
 - [Deploying From GitLab Registry To Prod K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
 - [K3s: Storage Cluster](./sections/storage-cluster.md)
+- [Automated Bucket Deployment](./sections/automated-bucket-deployment.md)
 <!-- - [Networking](./sections/networking.md) -->
 
 ### Notes
@@ -43,7 +44,7 @@ We will need a network for the nodes to communicate. For the a router I have cho
 <img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-logo.svg">
 We will need a way to store the code for the landing website, the front-end app and the back-end REST API. We  will also need CI/CD to compile the code and deploy it into our infrastructure. GitLab will work perfectly for these two tasks.
 
-#### Automation
+#### [Automation](./sections/automated-bucket-deployment.md)
 When you create an S3 bucket on AWS, everything is automated, there isn’t a human in a datacenter somewhere typing out CLI commands to get your bucket scheduled. This project must also work the same way, when a user wants to create a resource it must not require any human input to provision and deploy the bucket.
 
 #### Resource Utilization

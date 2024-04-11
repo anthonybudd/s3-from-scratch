@@ -78,7 +78,9 @@ nmap -p 5050 gitlab.local
 PORT     STATE SERVICE
 5050/tcp open  mmcc
 
-[Node 1] sudo nano /etc/hosts
+Solution
+```
+[Node X] sudo nano /etc/hosts
 
 10.0.0.XXX gitlab.local
 ```
@@ -117,10 +119,16 @@ eSidLK9LN0iPX+GKIL06ieAdSZs=
 -----END CERTIFICATE-----
 
 
-[Node 1] sudo nano /usr/local/share/ca-certificates/gitlab.local.crt
+[Node X] sudo nano /usr/local/share/ca-certificates/gitlab.local.crt
 **Paste .crt**
 
-[Node 1] sudo update-ca-certificates
+[Node X] sudo update-ca-certificates
+
+[Node X] openssl s_client -connect gitlab.local:5050
+
+...
+SSL handshake has read 1588 bytes and written 398 bytes
+Verification: OK
 ```
 
 
