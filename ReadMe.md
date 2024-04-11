@@ -40,6 +40,22 @@ We will need a "console" so we can locally interact with the infrastructure. I h
 
 Since this project needs to be "Enterprise-grade" we need a distinct and replicable compute unit which I call a "node". A node is a Raspberry Pi with a 1TB SSD and POE hat. I have also 3D printed a rack-mount solution for easy install into the rack. 
 
+#### [API](./api/ReadMe.md)
+```sh
+curl -X POST \
+    -H 'Authorization: Bearer $JWT' \
+    -H 'Content-Type: application/json' \
+    -d '{ "name":"s3-test-bucket"}' \
+    https://s3.anthonybudd.io/buckets
+```
+This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
+
+
+#### [Front-end](./frontend/ReadMe.md)
+<img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/front-end-shadow.png">
+
+A Vue.js front-end of AWS for users to administrate their S3 buckets.
+
 #### [Networking](./sections/networking.md)
 <img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
 
@@ -56,18 +72,3 @@ When you create an S3 bucket on AWS, everything is automated, there isn’t a hu
 #### Resource Utilization
 Due to the scale of AWS it would not be financially practical to give each user their own dedicated server hardware, instead the hardware is virtualized, allowing multiple tenants to share a single physical CPU. Similarly it would not be practical to assign a whole node and SSD to each bucket, to maximize resource utilization my platform must be able to allow multiple tenants to share the pool of SSD storage space available. In addition, AWS S3 buckets can store an unlimited amount of data, so my platform will also need to allow a user to have a dynamically increasing volume that will auto-scale based on the storage space required.
 
-#### [API](./api/ReadMe.md)
-```sh
-curl -X POST \
-    -H 'Authorization: Bearer $JWT' \
-    -H 'Content-Type: application/json' \
-    -d '{ "name":"s3-test-bucket"}' \
-    https://s3.anthonybudd.io/buckets
-```
-This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
-
-
-#### [Front-end](./frontend/ReadMe.md)
-<img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/front-end-shadow.png">
-
-A Vue.js front-end of AWS for users to administrate their S3 buckets.
