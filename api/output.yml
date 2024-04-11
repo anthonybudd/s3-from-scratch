@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: far-xxxxs
+  labels:
+    name: far-xxxxs
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: far-xxxxs-pod
+  name: far-xxxxs-pod
+  namespace: far-xxxxs
+spec:
+  containers:
+  - name: far-xxxxs-pod
+    image: quay.io/minio/minio:latest
+    env:
+    - name: MINIO_ROOT_USER
+      value: root
+    - name: MINIO_ROOT_PASSWORD
+      value: password
+    command:
+    - /bin/bash
+    - -c
+    args: 
+    - minio server /data --console-address :9001
+    ports:
+    - containerPort: 9001
+    volumeMounts:
+    - name: longhornvolume
+      mountPath: /data
+  volumes:
+  - name: longhornvolume
+    persistentVolumeClaim:
+      claimName: far-xxxxs-pvc
+---
+apiVersion: v1
+kind: Service  
+metadata:
+  name: far-xxxxs-svc
+  namespace: far-xxxxs 
+spec:
+  selector:    
+    app: far-xxxxs-pod 
+  ports:  
+  - protocol: TCP  
+    port: 80 
+    targetPort: 9001
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: far-xxxxs
+  name: far-xxxxs-ing
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: far-xxxxs.minio.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: far-xxxxs-svc
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: far-xxxxs-pvc
+  namespace: far-xxxxs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 5Gi

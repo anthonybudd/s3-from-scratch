@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $NODE_ENV == "production" ]]
+  then
+    echo "NODE_ENV=production ⚠️"
+  else
+    echo "NODE_ENV=$NODE_ENV"
+  fi

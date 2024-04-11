@@ -1,0 +1,14 @@
+stages:
+  - build
+
+build-job:
+  image: docker:dind
+  stage: build
+  services:
+    - docker:dind
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG

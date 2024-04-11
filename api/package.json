@@ -1,0 +1,73 @@
+{
+    "name": "s3-api-boilerplate",
+    "version": "1.0.0",
+    "main": "./src/index.js",
+    "author": "Anthony Budd",
+    "scripts": {
+        "start": "node ./src/",
+        "lint": "eslint src",
+        "_lint": "docker exec -ti s3-api npm run lint",
+        "jwt": "node ./src/scripts/jwt.js",
+        "_jwt": "docker exec -ti s3-api npm run jwt",
+        "env": "./src/scripts/env",
+        "db:migrate": "sequelize db:migrate",
+        "db:seed": "./src/scripts/seed",
+        "db:refresh": "./src/scripts/refresh",
+        "_db:refresh": "docker exec -ti s3-api npm run db:refresh",
+        "db:refresh-test": "node_modules/.bin/sequelize db:migrate:undo:all --env test && node_modules/.bin/sequelize db:migrate --env test && node_modules/.bin/sequelize db:seed:all --env test",
+        "test": "npm run db:refresh-test && mocha --exit --timeout 10000 tests",
+        "_test": "docker exec -ti s3-api npm run test"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "parserOptions": {
+            "ecmaVersion": 8,
+            "sourceType": "module"
+        },
+        "env": {
+            "node": true,
+            "es6": true
+        },
+        "rules": {
+            "no-console": 0,
+            "no-unused-vars": 1
+        }
+    },
+    "dependencies": {
+        "axios": "^0.24.0",
+        "bcrypt-nodejs": "0.0.3",
+        "cors": "^2.4.1",
+        "dotenv": "^10.0.0",
+        "express": "^4.8.5",
+        "express-fileupload": "^1.4.0",
+        "express-jwt": "^6.1.0",
+        "express-validator": "^6.13.0",
+        "faker": "^4.1.0",
+        "i": "^0.3.6",
+        "install": "^0.12.1",
+        "jsonwebtoken": "^5.7.0",
+        "jwt-decode": "^2.2.0",
+        "lodash": "^4.17.21",
+        "minimist": "^1.2.6",
+        "moment": "^2.30.1",
+        "morgan": "^1.9.1",
+        "mustache": "^3.2.1",
+        "mysql2": "^2.2.5",
+        "npm": "^7.20.6",
+        "passport": "^0.4.0",
+        "passport-jwt": "^4.0.0",
+        "passport-local": "^1.0.0",
+        "sequelize": "^6.11.0",
+        "sequelize-cli": "^6.3.0",
+        "sha256": "^0.2.0",
+        "uuid": "^3.4.0"
+    },
+    "devDependencies": {
+        "chai": "^3.2.0",
+        "chai-http": "^4.3.0",
+        "eslint": "^5.8.0",
+        "mocha": "^9.1.3",
+        "nyc": "^14.1.1",
+        "prettier": "^1.18.2"
+    }
+}

@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  s3-api:
+    build: .
+    entrypoint: "nodemon /app/src/index.js --watch /app --legacy-watch"
+    container_name: s3-api
+    volumes:
+      - ./:/app
+      - ./.vol/tmp:/tmp
+    links:
+      - s3-api-db
+      - s3-api-db-test
+    ports:
+      - "8888:80"
+    environment:
+      PORT: 80
+
+  s3-api-db:
+    image: mysql:oracle
+    container_name: s3-api-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.vol/s3-api:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
+
+  s3-api-db-test:
+    image: mysql:oracle
+    container_name: s3-api-db-test
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./.vol/s3-api-test:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD

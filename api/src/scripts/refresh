@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ $NODE_ENV == "production" ]]
+  then
+    echo "ERROR: Can not refresh while in production"
+  else
+    sequelize db:migrate:undo:all
+    sequelize db:migrate
+    sequelize db:seed:all
+  fi

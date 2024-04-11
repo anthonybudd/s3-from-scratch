@@ -1,0 +1,10 @@
+node_modules/
+.vol/
+.env
+dev.js
+private.pem
+public.pem
+.DS_Store
+*/.DS_Store
+k8s/secrets.yml
+kubeconfig.yml

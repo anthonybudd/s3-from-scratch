@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $NODE_ENV == "production" ]]
+  then
+    echo "ERROR: Can not seed while in production"
+  else
+    sequelize db:seed:all
+  fi

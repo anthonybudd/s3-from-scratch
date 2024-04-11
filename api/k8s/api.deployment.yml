@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-api
+  namespace: s3-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s3-api
+  template:
+    metadata:
+      labels:
+        app: s3-api
+    spec:
+      volumes:
+        - name: s3-api-jwt-secret
+          secret:
+            secretName: s3-api-jwt-secret
+        - name: storage-cluster-config
+          secret:
+            secretName: storage-cluster-config   
+      containers:
+        - name: s3-api
+          image: gitlab.local:5050/anthonybudd/api:master
+          imagePullPolicy: Always
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/bash", "-c", "sequelize db:migrate"]
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - name: s3-api-jwt-secret
+            mountPath: "/app/private.pem"
+            subPath: private.pem
+          - name: s3-api-jwt-secret
+            mountPath: "/app/public.pem"
+            subPath: public.pem
+          - name: storage-cluster-config
+            mountPath: "/app/config"
+            subPath: storage-config
+          env:
+          - name: NODE_ENV
+            value: "production"
+          - name: FRONTEND_URL
+            value: "https://app.EXAMPLE.COM"
+          - name: BACKEND_URL
+            value: "https://api.EXAMPLE.COM/api/v1"
+          - name: PORT
+            value: "80"
+          - name: PRIVATE_KEY_PATH
+            value: "/app/private.pem"
+          - name: PUBLIC_KEY_PATH
+            value: "/app/public.pem"
+          - name: DB_HOST
+            value: "s3-db"
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_USERNAME
+            value: "app"
+          - name: DB_DATABASE
+            value: "app"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: s3-api-secrets
+                key: DB_PASSWORD

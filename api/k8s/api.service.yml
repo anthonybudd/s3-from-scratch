@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: s3-api
+  namespace: s3-api
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: s3-api

@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: s3-db
+  namespace: s3-api
+spec:
+  selector:    
+    app: s3-db 
+  ports:  
+  - protocol: TCP  
+    port: 80 
+    targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-db
+  namespace: s3-api
+spec:
+  selector:
+    matchLabels:
+      app: s3-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: s3-db
+    spec:
+      containers:
+      - image: mysql:8
+        name: s3-db
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: MYSQL_DATABASE
+          value: app
+        - name: MYSQL_USER
+          value: app
+        - name: MYSQL_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+          name: s3-db
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName: mysql-pv-claim

@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: NAMESPACE
+  labels:
+    name: NAMESPACE
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: minio-pod
+  name: minio-pod
+  namespace: NAMESPACE
+spec:
+  containers:
+  - name: minio-pod
+    image: quay.io/minio/minio:latest
+    env:
+    - name: MINIO_ROOT_USER
+      value: root
+    - name: MINIO_ROOT_PASSWORD
+      value: password
+    command:
+    - /bin/bash
+    - -c
+    args: 
+    - minio server /data --console-address :9001
+    ports:
+    - containerPort: 9001
+    volumeMounts:
+    - name: longhornvolume
+      mountPath: /data
+  volumes:
+  - name: longhornvolume
+    persistentVolumeClaim:
+      claimName: minio-pvc
+---
+apiVersion: v1
+kind: Service  
+metadata:
+  name: minio-svc
+  namespace: NAMESPACE 
+spec:
+  selector:    
+    app: minio-pod 
+  ports:  
+  - protocol: TCP  
+    port: 80 
+    targetPort: 9001
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: NAMESPACE
+  name: minio-ing
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: NAMESPACE.minio.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio-svc
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: NAMESPACE
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 5Gi
