@@ -46,6 +46,19 @@ pod/test-bucket-100424-pod created
 service/test-bucket-100424-svc created
 ingress.networking.k8s.io/test-bucket-100424-ing created
 persistentvolumeclaim/test-bucket-100424-pvc created
+
+[Console] kubectl --kubeconfig=.kube/storage-config get all,cm,secret,ing,pvc -n test-bucket-100424-211606
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/test-bucket-100424-211606-pod   1/1     Running   0          4m
+
+NAME                                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/test-bucket-100424-211606-svc   ClusterIP   10.43.205.223   <none>        80/TCP    4m
+
+NAME                                                      CLASS    HOSTS                                   ADDRESS                            PORTS   AGE
+ingress.networking.k8s.io/test-bucket-100424-211606-ing   <none>   test-bucket-100424-211606.minio.local   10.0.0.113,10.0.0.132,10.0.0.204   80      4m
+
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/test-bucket-100424-211606-pvc   Bound    pvc-c0a81a50-85d5-42a5-b131-534da7e3a30f   5Gi        RWO            longhorn       4m
 ```
 
 In Longhorn UI we should be able to see that a new volume has been created

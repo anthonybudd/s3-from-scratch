@@ -77,6 +77,7 @@ nmap -p 5050 gitlab.local
 
 PORT     STATE SERVICE
 5050/tcp open  mmcc
+```
 
 Solution
 ```

@@ -209,5 +209,28 @@ You should be able to goto [http://longhorn.local](http://longhorn.local) and yo
 <img height="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/longhorn-ui.png">
 
 
+### Configure Longhorn
+By default Longhorn will save data to `/var/lib/longhorn` which is our SD card. To make our Longhorn nodes save to our SSD go to  __Node__ in tha top menu.
 
+For each of the Longhorn nodes click on __Edit node and Disks__ in the far right. Set Scheduling to Disable and then delete the existing disk. Click __Add Disk__ set the Name to `ssd` and the Path to `/ssd`. Click save.
+
+<img height="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/longhorn-ssd.png">
+
+### Set Longhorn to the default storageclass
+You can set Longhorn as the default storage class by running the following
+
+```
+[Console] kubectl --kubeconfig=.kube/storage-config get storageclass                                      
+NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  2d
+longhorn (default)     driver.longhorn.io      Delete          Immediate              true                   2d
+
+[Console] kubectl --kubeconfig=.kube/storage-config patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}' 
+storageclass.storage.k8s.io/local-path patched
+
+[Console] kubectl --kubeconfig=.kube/storage-config get storageclass 
+NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+longhorn (default)   driver.longhorn.io      Delete          Immediate              true                   2d
+local-path           rancher.io/local-path   Delete          WaitForFirstConsumer   false                  2d
+```
 

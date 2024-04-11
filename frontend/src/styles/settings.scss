@@ -1,0 +1,23 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+
+
+.v-btn--size-default {
+    min-width: 36px !important;
+}
+
+.m-auto {
+    margin: auto;
+}
+
+.hide-items .v-data-table-footer__items-per-page {
+    display: none;
+}
