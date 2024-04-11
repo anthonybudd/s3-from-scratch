@@ -50,11 +50,14 @@ persistentvolumeclaim/test-bucket-100424-pvc created
 
 In Longhorn UI we should be able to see that a new volume has been created
 <img height="400" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/test-bucket-longhorn.png">
-<img height="400" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/test-bucket-longhorn-volume.png">
+<img src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/test-bucket-longhorn-volume.png">
 
 
 # Success!
-When we go to `test-bucket-100424-211606.minio.local` we should be greeted by the Minio login screen
-This demonstrates that we can create new buckets for our users programmatically.
+When we go to `test-bucket-100424-211606.minio.local` we should be greeted by the Minio login screen. You can login with `root / password`. 
+
+You can change the login details by editing the env vars `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in [bucket.yml](automation-test/bucket.yml)
+
+This demonstrates that we can create new buckets for our users on our storage cluster programmatically.
 
 <img height="400" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/test-bucket.png">

@@ -75,14 +75,39 @@ node-1   Ready    control-plane,master   3m6s    v1.26.9+k3s1
 node-2   Ready    <none>                 2m37s   v1.26.9+k3s1
 ```
 
----
+
+#### First Deployment
+Lets test that everything is working by deploying a container that will just return `hello-world` when we make a GET request to the root.
+
+[k3s/echo.yml](/k3s/echo.yml) will make a deployment, service and an ingress.
+
+```
+[Console] kubectl --kubeconfig=.kube/config apply -f k3s/echo.yml
+deployment.apps/echo-deployment created
+service/echo-service created
+ingress.networking.k8s.io/echo-ingress created
+
+[Console] kubectl --kubeconfig=.kube/config get pods
+```
+
+Add your master production nodes IP to `/etc/hosts` on your work computer and go to [http://echo.local](http://echo.local)
+```
+sudo nano /etc/hosts
+
+10.0.0.XXX echo.local
+```
+
+<img height="400" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/echo.png">
+
+
+
 _AB: k8s dashboard_
 
-# install k8s dashboard ui
+<!-- # install k8s dashboard ui
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml`
 
 Source: https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 
 kubectl --kubeconfig=prod-k8s apply -f ./prod-cluster/dashboard.
 kubectl --kubeconfig=prod-k8s apply -f ./prod-cluster/dashboard.cluster-role-binding.yml
-kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard describe secret $(kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard describe secret $(kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}') -->
