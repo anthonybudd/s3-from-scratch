@@ -5,7 +5,7 @@ We need to be able to deploy the SaaS front-end and REST API for S3 from our pri
 
 ### Make A New Repo
 
-Make a new repo in GitLab with the following structure, all of the files can be found in [./deployment-test](./deployment-test)
+Make a new repo in GitLab with the following structure, all of the files can be found in [./deployment-test](./../deployment-test)
 
 ```sh
 new-repo/
@@ -36,7 +36,7 @@ service/website-service created
 ingress.networking.k8s.io/website-ingress created
 ```
 
-See if the pods has deployed
+Use `get pods` to see if the pod has deployed
 ```sh
 [Console] kubectl --kubeconfig=.kube/config get pods
 NAME                                  READY   STATUS             RESTARTS   AGE
@@ -120,7 +120,7 @@ eSidLK9LN0iPX+GKIL06ieAdSZs=
 [Node 1] sudo nano /usr/local/share/ca-certificates/gitlab.local.crt
 **Paste .crt**
 
-[Node 1] update-ca-certificates
+[Node 1] sudo update-ca-certificates
 ```
 
 
