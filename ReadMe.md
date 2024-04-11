@@ -59,8 +59,8 @@ Due to the scale of AWS it would not be financially practical to give each user 
 #### [API](./api/ReadMe.md)
 ```sh
 curl -X POST \
-    -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer $JWT' \
+    -H 'Content-Type: application/json' \
     -d '{ "name":"s3-test-bucket"}' \
     https://s3.anthonybudd.io/buckets
 ```
