@@ -1,9 +1,9 @@
 <template>
-    <div class="bg-grey-lighten-3">
+    <!-- <div class="bg-grey-lighten-3">
         <v-container>
             <h1 class="text-h5 font-weight-bold">Buckets</h1>
         </v-container>
-    </div>
+    </div> -->
     <div>
         <v-container class="fill-height">
             <v-sheet
@@ -12,6 +12,13 @@
                 border
             >
                 <v-container class="px-4 py-4 d-flex align-center justify-center">
+                    <v-text-field
+                        v-model="search"
+                        label="Search"
+                        variant="outlined"
+                        density="compact"
+                        max-width="200"
+                    ></v-text-field>
                     <v-spacer></v-spacer>
                     <v-dialog
                         v-model="dialog"

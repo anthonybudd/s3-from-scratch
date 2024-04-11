@@ -66,7 +66,7 @@
                     </v-menu>
                 </v-container>
                 <v-divider class="d-none d-sm-block"></v-divider>
-                <v-container class="d-none d-sm-block">
+                <!-- <v-container class="d-none d-sm-block">
                     <v-btn
                         v-for="link in links"
                         :to="link.href"
@@ -75,7 +75,7 @@
                         :active="((link.text == 'Dashboard' && $route.path === '/') || (link.text != 'Dashboard' && $route.path.includes(link.href)))"
                         variant="text"
                     ></v-btn>
-                </v-container>
+                </v-container> -->
             </v-container>
         </v-app-bar>
         <v-navigation-drawer
@@ -98,8 +98,6 @@ import { ref } from 'vue';
 import { useDisplay } from 'vuetify';
 
 const { xs } = useDisplay();
-
-const pathname = window.location.pathname;
 
 const drawer = ref(false);
 

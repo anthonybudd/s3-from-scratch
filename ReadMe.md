@@ -18,6 +18,9 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [Deploying From GitLab Registry To Prod K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
 - [K3s: Storage Cluster](./sections/storage-cluster.md)
 - [Automated Bucket Deployment](./sections/automated-bucket-deployment.md)
+- [API](./api/ReadMe.md)
+- [Front-end](./frontend/ReadMe.md)
+<!-- - [Website](./website/ReadMe.md) -->
 <!-- - [Networking](./sections/networking.md) -->
 
 ### Notes
@@ -29,6 +32,7 @@ Because this is still very much a work-in-progress you will see my notes in ital
 
 #### [Console](./sections/console.md)
 <img height="200" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/console-close-up.png">
+
 We will need a "console" so we can locally interact with the infrastructure. I have tried using a Raspberry Pi with a monitor and keyboard attached but I have found that using an old MacBook Pro works best for this. In this section I explain how to set-up the console so you can use it to store secrets, manage the network, provision K3s clusters and deploy pods.
 
 #### [Node](./sections/node.md)
@@ -38,10 +42,12 @@ Since this project needs to be "Enterprise-grade" we need a distinct and replica
 
 #### [Networking](./sections/networking.md)
 <img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
+
 We will need a network for the nodes to communicate. For the a router I have chosen OpenWRT. This allows me to use a Raspberry Pi with a USB 3.0 Ethernet adapter so it can work as as a router between the internet and the “datacenter”.
 
 #### [Source Control](./sections/gitlab.md)
 <img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/gitlab-logo.svg">
+
 We will need a way to store the code for the landing website, the front-end app and the back-end REST API. We  will also need CI/CD to compile the code and deploy it into our infrastructure. GitLab will work perfectly for these two tasks.
 
 #### [Automation](./sections/automated-bucket-deployment.md)
@@ -50,3 +56,18 @@ When you create an S3 bucket on AWS, everything is automated, there isn’t a hu
 #### Resource Utilization
 Due to the scale of AWS it would not be financially practical to give each user their own dedicated server hardware, instead the hardware is virtualized, allowing multiple tenants to share a single physical CPU. Similarly it would not be practical to assign a whole node and SSD to each bucket, to maximize resource utilization my platform must be able to allow multiple tenants to share the pool of SSD storage space available. In addition, AWS S3 buckets can store an unlimited amount of data, so my platform will also need to allow a user to have a dynamically increasing volume that will auto-scale based on the storage space required.
 
+#### [API](./api/ReadMe.md)
+```sh
+curl -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer $JWT' \
+    -d '{ "name":"s3-test-bucket"}' \
+    https://s3.anthonybudd.io/buckets
+```
+This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
+
+
+#### [Front-end](./frontend/ReadMe.md)
+<img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/front-end-shadow.png">
+
+A Vue.js front-end of AWS for users to administrate their S3 buckets.
