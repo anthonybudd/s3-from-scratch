@@ -45,6 +45,9 @@ SSH back into the console, this should not ask for a password.
 ```
 Source: [https://brew.sh/](https://brew.sh/)
 
+### Install Helm
+```[Console] brew install helm```
+
 ### Install Ansible
 ```[Console] brew install ansible```
 

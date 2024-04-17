@@ -19,12 +19,12 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [K3s: Storage Cluster](./sections/storage-cluster.md)
 - [Automated Bucket Deployment](./sections/automated-bucket-deployment.md)
 - [API](./api/ReadMe.md)
-- [Front-end](./frontend/ReadMe.md)
+- [Frontend](./frontend/ReadMe.md)
 <!-- - [Website](./website/ReadMe.md) -->
 <!-- - [Networking](./sections/networking.md) -->
 
 ### Notes
-You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Dev]`, `[Console]` and `[Node X]`.
+You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Console]` and `[Node X]`.
 
 Because this is still very much a work-in-progress you will see my notes in italics "_AB:_" throughout, please ignore.
 
@@ -51,13 +51,13 @@ curl -X POST \
 This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
 
 
-#### [Front-end](./frontend/ReadMe.md)
+#### [Frontend](./frontend/ReadMe.md)
 <img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/front-end-shadow.png">
 
-A Vue.js front-end of AWS for users to administrate their S3 buckets.
+This represents the AWS management console found at [aws.amazon.com/console](https://aws.amazon.com/console/). This is a Vue.js static frontend SPA that makes HTTP requests to the [S3 REST API](./api/ReadMe.md) for users to create, manage and delete their S3 buckets.
 
 #### [Networking](./sections/networking.md)
-<img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
+<img height="75" src="hattps://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
 
 We will need a network for the nodes to communicate. For the a router I have chosen OpenWRT. This allows me to use a Raspberry Pi with a USB 3.0 Ethernet adapter so it can work as as a router between the internet and the “datacenter”.
 

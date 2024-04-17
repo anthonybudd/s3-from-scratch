@@ -21,8 +21,8 @@
                     ></v-text-field>
                     <v-spacer></v-spacer>
                     <v-dialog
-                        v-model="dialog"
-                        max-width="500"
+                        v-model="createBucketDialog"
+                        max-width="350"
                     >
                         <template v-slot:activator="{ props }">
                             <v-btn
@@ -47,17 +47,62 @@
                     :items-per-page-options="[]"
                     class="hide-items"
                 >
+                    <template v-slot:item.name="{ item }">
+                        <p class="my-4"><b>{{ item.name }}</b></p>
+
+                        <code v-if="item.accessKeyID && item.secretAccessKey">
+<pre class="creds">
+<div class="mb-1"><v-icon icon="mdi-alert"></v-icon> This will only be shown once. Please save it somewhere safe.</div>
+<strong>AccessKeyID:</strong> {{ item.accessKeyID }}
+<strong>SecretAccessKey:</strong> {{ item.secretAccessKey }}
+</pre>
+</code>
+                    </template>
                     <template v-slot:item.actions="{ item }">
-                        <v-btn
-                            size="small"
-                            variant="tonal"
-                            class="red--text"
-                            @click="deleteBucket(item)"
-                            :loading="item.loading"
-                            :disabled="item.loading"
+
+
+
+                        <v-dialog
+                            v-model="deleteBucketDialog"
+                            max-width="400"
                         >
-                            Delete
-                        </v-btn>
+                            <template v-slot:activator="{ props: activatorProps }">
+                                <v-btn
+                                    v-bind="activatorProps"
+                                    size="small"
+                                    variant="tonal"
+                                    class="red--text"
+                                >
+                                    Delete
+                                </v-btn>
+                            </template>
+
+                            <v-card
+                                title="Delete Bucket"
+                                text="Are you sure you want to delete this bucket? This action cannot be undone."
+                            >
+                                <template v-slot:actions>
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn
+                                        text
+                                        @click="deleteBucketDialog = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+
+                                    <v-btn
+                                        variant="flat"
+                                        color="red"
+                                        :loading="item.loading"
+                                        :disabled="item.loading"
+                                        @click="deleteBucket(item)"
+                                    >
+                                        Delete
+                                    </v-btn>
+                                </template>
+                            </v-card>
+                        </v-dialog>
                     </template>
                 </v-data-table>
             </v-sheet>
@@ -73,10 +118,11 @@ import CreateBucketForm from './../components/CreateBucketForm.vue';
 
 const items = ref([]);
 const search = ref('');
-const dialog = ref(false);
+const createBucketDialog = ref(false);
+const deleteBucketDialog = ref(false);
 const headers = [
-    { title: 'ID', key: 'id' },
     { title: 'Name', key: 'name' },
+    { title: 'ID', key: 'id' },
     { title: 'Actions', key: 'actions' },
 ];
 
@@ -91,8 +137,8 @@ const getData = async () => {
 };
 
 const onCreateBucket = async (bucket) => {
-    dialog.value = false;
-    getData();
+    createBucketDialog.value = false;
+    items.value.push(bucket);
 };
 
 const deleteBucket = async (bucket) => {
@@ -100,5 +146,6 @@ const deleteBucket = async (bucket) => {
     await api.buckets.delete(bucket.id);
     items.value = items.value.filter((item) => item.id !== bucket.id);
     bucket.loading = true;
+    deleteBucketDialog.value = false;
 };
 </script>

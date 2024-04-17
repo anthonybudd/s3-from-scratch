@@ -26,8 +26,12 @@ onMounted(async () => {
         router.push('/logout');
     } else {
         api.setJWT(accessToken);
-        const { data: user } = await api.user.get();
-        store.commit('setUser', user);
+        try {
+            const { data: user } = await api.user.get();
+            store.commit('setUser', user);
+        } catch (error) {
+            router.push('/login');
+        }
         isLoaded.value = true;
     }
 });

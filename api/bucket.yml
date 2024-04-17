@@ -18,9 +18,9 @@ spec:
     image: quay.io/minio/minio:latest
     env:
     - name: MINIO_ROOT_USER
-      value: root
+      value: ROOTUSER
     - name: MINIO_ROOT_PASSWORD
-      value: password
+      value: ROOTPASSWORD
     command:
     - /bin/bash
     - -c

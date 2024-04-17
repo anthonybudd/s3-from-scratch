@@ -1,5 +1,8 @@
 secrets.md
 notes.md
+notes/
 *.crt
 *.k8s
 website/
+
+api_

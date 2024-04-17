@@ -21,9 +21,31 @@ module.exports = {
             allowNull: true,
         },
 
+        userID: {
+            type: Sequelize.UUID,
+            allowNull: true,
+        },
+
         name: {
             type: Sequelize.STRING,
             allowNull: false,
+        },
+
+        createStdout: {
+            type: Sequelize.TEXT,
+            allowNull: true,
+        },
+        createStderr: {
+            type: Sequelize.TEXT,
+            allowNull: true,
+        },
+        deleteStdout: {
+            type: Sequelize.TEXT,
+            allowNull: true,
+        },
+        deleteStderr: {
+            type: Sequelize.TEXT,
+            allowNull: true,
         },
     }),
     down: (queryInterface, Sequelize) => queryInterface.dropTable('Buckets'),

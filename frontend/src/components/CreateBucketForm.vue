@@ -4,10 +4,10 @@
             <v-text-field
                 v-model="bucketName"
                 label="Bucket Name"
-                hide-details
                 variant="outlined"
-                denisty="compact"
+                density="compact"
                 required
+                @keyup="onKeyUpBucketName"
             ></v-text-field>
         </v-card-text>
 
@@ -18,7 +18,7 @@
                 color="primary"
                 @click="onClickCreateBucket"
                 :loading="loading"
-                :disabled="loading"
+                :disabled="loading || bucketName.length < 4"
             >Create</v-btn>
         </v-card-actions>
     </v-card>
@@ -39,5 +39,9 @@ const onClickCreateBucket = async () => {
     });
     emit('onCreateBucket', bucket);
     loading.value = false;
-};  
+};
+
+const onKeyUpBucketName = async () => {
+    bucketName.value = bucketName.value.replace(/[^a-zA-Z0-9-]/g, '');
+};
 </script>

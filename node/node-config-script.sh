@@ -29,7 +29,9 @@ sudo sed -i '/^ChallengeResponseAuthentication/s/.*/ChallengeResponseAuthenticat
 sudo sed -i '/^#PasswordAuthentication/s/.*/PasswordAuthentication no/' /etc/ssh/sshd_config 
 sudo sed -i '/^#PermitEmptyPasswords/s/.*/PermitEmptyPasswords no/' /etc/ssh/sshd_config   
 echo $'\n[+] Reloading SSH'
-/etc/init.d/ssh reload
+
+# Do reboot instead
+# /etc/init.d/ssh reload 
 
 
 echo $'\n[+] Config Complete!'

@@ -35,6 +35,10 @@ _AB: Fail2Ban Config?_
 _AB: Test Fail2Ban_
 
 ```sh
+[Node X] curl https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/node/node-config-script.sh -sSL | sh
+
+# Or
+
 [Console] scp ./node/node-config-script.sh node@10.0.0.XXX:~
 [Console] ssh node@10.0.0.XXX
 [Node X] sudo ~/node-config-script.sh

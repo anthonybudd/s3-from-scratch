@@ -111,3 +111,7 @@ Source: https://github.com/kubernetes/dashboard/blob/master/docs/user/access-con
 kubectl --kubeconfig=prod-k8s apply -f ./prod-cluster/dashboard.
 kubectl --kubeconfig=prod-k8s apply -f ./prod-cluster/dashboard.cluster-role-binding.yml
 kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard describe secret $(kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}') -->
+
+
+
+

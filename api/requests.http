@@ -1,9 +1,9 @@
 # Install VS Code extension rest-client 
 # URL: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-# @host=http://localhost:8888/api/v1
-@host=http://api.local/api/v1
-@AccessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpZCI6ImM0NjQ0NzMzLWRlZWEtNDdkOC1iMzVhLTg2ZjMwZmY5NjE4ZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImZpcnN0TmFtZSI6IlVzZXIiLCJsYXN0TmFtZSI6Ik9uZSIsImlhdCI6MTcxMjgxNDM2NCwiZXhwIjozNDI1NzE1MTI4fQ.oU5Qu_Hg3xiXSmbfvbyHRyFyGmmoqzWSvEoID5npzMr2Hx0HNlNXFV1BKLy4nhgGV9H9xY2_XFz8dfSLMD-IHSl9tRDR5XauZzpk4cBHr1h5jEEz7Ld94vb9snKshgAcjSsfvn4lEsbXNgrf-2CVyc5nt6oaftkzK6G_B3-gS4M3g5HCwmQUSoApmgWaYaQQZNKdHJnPxzBpXZow_UkuL2OnrocTvHYb3uK51a620uR7oQa9CMWq62YbZ38RENJ6Ri6cWMtrgra_4bfhiltJ0xb9FFMDF7_sL_YBNgvta3CuEJq98uAebNTxQZq60M8zu5Hcs9dwJEM1_t1Gtx6tyg
+@host=http://localhost:8888/api/v1
+# @host=http://api.local/api/v1
+@AccessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpZCI6ImM0NjQ0NzMzLWRlZWEtNDdkOC1iMzVhLTg2ZjMwZmY5NjE4ZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImZpcnN0TmFtZSI6IlVzZXIiLCJsYXN0TmFtZSI6Ik9uZSIsImlhdCI6MTcxMjg5NDI5NywiZXhwIjozNDI1ODc0OTk0fQ.O4XnEFAlh-08RSfBECB4s2xxf-dWBDqo4KFJGH_2kWm-A1gM_eELgA1eM_yxxpStjIFLJ_NAUPf8W1zN1gyKk2-zCBIG17Q4eW-8iKMLAGQUsRsRq8B1KPt8oQXl5Wx-VqFfoLAZNl_OLniaOwGj8BmqEnU74_FVw8PCBN5AhGcme1An5MmsIBp3kWezZ5g4ZHVIKfKmWEWUxjhVVclkHn3OrLMIeQUKxBdEDEgSRTJRXYJAycnzxZX9QtOgQO1G_aBzNbocUKOgyEE5OKTNJ7hONijENLCNv8LbKr0Wg3a0e1gYY4Y8FszQsvbjTTYVJbz2dey5qYfLcvSjCO2S4w
 
 ###########################################
 # Auth
@@ -28,11 +28,6 @@ GET {{host}}/buckets
 Authorization: Bearer {{AccessToken}}
 
 
-### Get Bucket by ID
-GET {{host}}/buckets/fae8a1fb-bc90-4565-b567-1fe6846544de
-Authorization: Bearer {{AccessToken}}
-
-
 ### Create Bucket
 POST {{host}}/buckets
 Authorization: Bearer {{AccessToken}}
@@ -41,3 +36,7 @@ content-type: application/json
 {
     "name": "x-test"
 }
+
+### Delete Bucket
+DELETE {{host}}/buckets/fae8a1fb-bc90-4565-b567-1fe6846544de
+Authorization: Bearer {{AccessToken}}
