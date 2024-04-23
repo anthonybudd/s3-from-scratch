@@ -9,4 +9,9 @@ export default createStore({
             state.user = payload;
         }
     },
+    getters: {
+        user(state) {
+            return state.user;
+        }
+    },
 });

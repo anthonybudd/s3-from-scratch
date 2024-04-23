@@ -3,6 +3,7 @@ const isInGroup = require('./isInGroup');
 const isNotSelf = require('./isNotSelf');
 const isGroupOwner = require('./isGroupOwner');
 const canAccessBucket = require('./canAccessBucket');
+const hCaptcha = require('./hCaptcha');
 
 module.exports = {
     checkPassword,
@@ -10,4 +11,5 @@ module.exports = {
     isNotSelf,
     isGroupOwner,
     canAccessBucket,
+    hCaptcha,
 };

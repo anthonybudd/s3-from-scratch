@@ -1,8 +1,9 @@
-secrets.md
-notes.md
-notes/
+.DS_Store
+
+notes/*
 *.crt
 *.k8s
-website/
 
 api_
+frontend_
+website_

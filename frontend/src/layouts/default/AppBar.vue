@@ -49,11 +49,11 @@
                                     variant="tonal"
                                     class="px-1"
                                 >
-                                    A.B
+                                    {{ user.firstName.charAt(0) }}.{{ user.lastName.charAt(0) }}
                                 </v-btn>
                                 <p class="ml-4">
-                                    <span class="font-weight-bold">Anthony Budd</span><br>
-                                    <span class="text-medium-emphasis">123-123</span>
+                                    <span class="font-weight-bold">{{ user.firstName }} {{ user.lastName }}</span><br>
+                                    <span class="text-medium-emphasis">{{ user.id.split('-')[0].toUpperCase() }}</span>
                                 </p>
                             </v-card-text>
                             <v-divider></v-divider>
@@ -66,16 +66,6 @@
                     </v-menu>
                 </v-container>
                 <v-divider class="d-none d-sm-block"></v-divider>
-                <!-- <v-container class="d-none d-sm-block">
-                    <v-btn
-                        v-for="link in links"
-                        :to="link.href"
-                        :key="link.text"
-                        :text="link.text"
-                        :active="((link.text == 'Dashboard' && $route.path === '/') || (link.text != 'Dashboard' && $route.path.includes(link.href)))"
-                        variant="text"
-                    ></v-btn>
-                </v-container> -->
             </v-container>
         </v-app-bar>
         <v-navigation-drawer
@@ -96,10 +86,13 @@
 <script setup>
 import { ref } from 'vue';
 import { useDisplay } from 'vuetify';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const { xs } = useDisplay();
 
 const drawer = ref(false);
+const user = ref(store.getters['user']);
 
 const links = [
     { href: '/', text: 'Buckets' },

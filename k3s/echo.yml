@@ -43,7 +43,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: echo.local
+  - host: echo.minio.local
     http:
       paths:
       - path: /

@@ -1,9 +1,4 @@
 <template>
-    <!-- <div class="bg-grey-lighten-3">
-        <v-container>
-            <h1 class="text-h5 font-weight-bold">Buckets</h1>
-        </v-container>
-    </div> -->
     <div>
         <v-container class="fill-height">
             <v-sheet
@@ -27,7 +22,7 @@
                         <template v-slot:activator="{ props }">
                             <v-btn
                                 v-bind="props"
-                                color="grey-darken-3"
+                                color="grey-darken-3 btn-create-bucket"
                                 variant="flat"
                             >
                                 Create Bucket
@@ -48,7 +43,10 @@
                     class="hide-items"
                 >
                     <template v-slot:item.name="{ item }">
-                        <p class="my-4"><b>{{ item.name }}</b></p>
+                        <p class="my-4">
+                            <b>{{ item.name }}</b><br>
+                            <small class="d-none d-sm-flex"><a :href="item.endpoint">{{ item.endpoint }}</a></small>
+                        </p>
 
                         <code v-if="item.accessKeyID && item.secretAccessKey">
 <pre class="creds">
@@ -58,10 +56,45 @@
 </pre>
 </code>
                     </template>
+                    <template v-slot:item.status="{ item }">
+                        <template
+                            v-if="item.status === 'Provisioning'"
+                            color="red"
+                            height="6"
+                            indeterminate
+                            rounded
+                        >
+                            <p>{{ item.status }}</p>
+                            <v-progress-linear
+                                color="deep-purple-accent-4"
+                                height="6"
+                                indeterminate
+                                rounded
+                            ></v-progress-linear>
+                        </template>
+                        <v-chip
+                            v-else-if="item.status === 'Provisioned'"
+                            class="ma-2"
+                            color="green"
+                            size="small"
+                            label
+                        >
+                            Provisioned
+                            <v-icon
+                                icon="mdi-check"
+                                end
+                            ></v-icon>
+                        </v-chip>
+                        <v-chip
+                            v-else
+                            class="ma-2"
+                            size="small"
+                            label
+                        >
+                            {{ item.status }}
+                        </v-chip>
+                    </template>
                     <template v-slot:item.actions="{ item }">
-
-
-
                         <v-dialog
                             v-model="deleteBucketDialog"
                             max-width="400"
@@ -115,20 +148,21 @@ import { ref, onMounted } from 'vue';
 import api from './../api';
 import CreateBucketForm from './../components/CreateBucketForm.vue';
 
-
+let updateLoop;
 const items = ref([]);
 const search = ref('');
 const createBucketDialog = ref(false);
 const deleteBucketDialog = ref(false);
 const headers = [
     { title: 'Name', key: 'name' },
-    { title: 'ID', key: 'id' },
+    { title: 'Status', key: 'status' },
     { title: 'Actions', key: 'actions' },
 ];
 
 
 onMounted(async () => {
-    getData();
+    await getData();
+    updateLoop = setInterval(getData, 10000);
 });
 
 const getData = async () => {

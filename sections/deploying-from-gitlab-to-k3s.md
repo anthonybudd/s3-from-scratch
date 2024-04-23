@@ -1,4 +1,4 @@
-# Deploying From GitLab Registry To K3s
+# Deploying From GitLab Registry To Local K3s
 
 We need to be able to deploy the SaaS front-end and REST API for S3 from our private GitLab Repo to our prod cluster.
 

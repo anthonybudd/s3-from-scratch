@@ -1,11 +1,11 @@
 # K3S: Production cluster
 
-This guide will cover how to set-up the production kubernetes cluster for hosting our public website, api and front-end
+This guide will cover how to set-up the production kubernetes cluster for hosting our public website, api and front-end.
 
 _AB: Make cluster HA_
 
 ### Build nodes
-Start by building two nodes and the install them into the infrastructure.
+Start by building two nodes, [following the default node set-up procedure](./node.md), and the install them into the infrastructure.
 
 Once both nodes have booted-up, confirm that you can SSH into the nodes from the console.
 
@@ -29,10 +29,10 @@ Edit the `hosts.ini` located in `./ansible/inventory/prod-cluster` so node-1 IP 
 
 ```
 [master]
-10.0.0.5
+10.0.0.XXX
 
 [node]
-10.0.0.5
+10.0.0.YYY
 
 [k3s_cluster:children]
 master
@@ -114,4 +114,15 @@ kubectl --kubeconfig=prod-k8s -n kubernetes-dashboard describe secret $(kubectl 
 
 
 
+
+###
+
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.1.1/cert-manager.yaml
+
+kubectl get pods --namespace cert-manager
+
+NAME                                       READY   STATUS    RESTARTS   AGE
+cert-manager-5c6866597-zw7kh               1/1     Running   0          2m
+cert-manager-cainjector-577f6d9fd7-tr77l   1/1     Running   0          2m
+cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0       
 

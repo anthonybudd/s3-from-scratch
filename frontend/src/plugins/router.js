@@ -24,6 +24,11 @@ const routes = [
                 component: () => import(/* webpackChunkName: "home" */ '@/views/Login.vue'),
             },
             {
+                path: '/sign-up',
+                name: 'SignUp',
+                component: () => import(/* webpackChunkName: "home" */ '@/views/SignUp.vue'),
+            },
+            {
                 path: '/logout',
                 name: 'Logout',
                 beforeEnter: async (to, from, next) => {

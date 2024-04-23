@@ -82,6 +82,8 @@ app.post('/buckets', [
         const bucket = await Bucket.create({
             userID: req.user.id,
             name: data.name,
+            status: 'Provisioning',
+            endpoint: `${data.name}.${process.env.S3_ROOT}`,
         });
 
         tmp.file((err, path) => {

@@ -17,6 +17,8 @@ Unless otherwise specified always flash the SD card with 64-bit Raspberry Pi OS 
 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory 
 ```
 
+More on cgroups: [Downey.io/blog/exploring-cgroups-raspberry-pi](https://downey.io/blog/exploring-cgroups-raspberry-pi)
+
 #### Disable WiFi & Bluetoooth
 ```sh
 [Node X] sudo nano /boot/firmware/config.txt

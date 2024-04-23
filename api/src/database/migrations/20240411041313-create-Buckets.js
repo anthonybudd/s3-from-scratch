@@ -30,6 +30,14 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: false,
         },
+        status: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        endpoint: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
 
         createStdout: {
             type: Sequelize.TEXT,

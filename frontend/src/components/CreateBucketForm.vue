@@ -8,6 +8,7 @@
                 density="compact"
                 required
                 @keyup="onKeyUpBucketName"
+                @keydown.enter.prevent="onClickCreateBucket"
             ></v-text-field>
         </v-card-text>
 
@@ -25,9 +26,11 @@
 </template>
 
 <script setup>
+import { useNotification } from "@kyvg/vue3-notification";
 import { defineEmits, ref } from 'vue';
 import api from './../api';
 
+const { notify } = useNotification();
 const emit = defineEmits(['showsidebar']);
 const loading = ref(false);
 const bucketName = ref('');
@@ -38,6 +41,9 @@ const onClickCreateBucket = async () => {
         name: bucketName.value,
     });
     emit('onCreateBucket', bucket);
+    notify({
+        title: 'Bucket Created'
+    });
     loading.value = false;
 };
 

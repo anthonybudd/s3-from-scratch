@@ -6,6 +6,8 @@ const insert = [{
     updatedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
     userID: 'c4644733-deea-47d8-b35a-86f30ff9618e',
     name: 'test-bucket',
+    status: 'Provisioned',
+    endpoint: `test-bucket.${process.env.S3_ROOT}`,
 }];
 
 module.exports = {

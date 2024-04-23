@@ -2,6 +2,7 @@ const { body, validationResult, matchedData } = require('express-validator');
 const { User, Group, GroupsUsers } = require('./../models');
 const errorHandler = require('./../providers/errorHandler');
 const generateJWT = require('./../providers/generateJWT');
+const middleware = require('./middleware');
 const bcrypt = require('bcrypt-nodejs');
 const passport = require('passport');
 const express = require('express');
@@ -30,8 +31,9 @@ app.get('/_authcheck', [
  * 
  */
 app.post('/auth/login', [
-    body('email').exists().toLowerCase(),
-    body('password').exists(),
+    body('email').notEmpty().toLowerCase(),
+    body('password').notEmpty(),
+    middleware.hCaptcha,
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
@@ -64,7 +66,8 @@ app.post('/auth/login', [
  * 
  */
 app.post('/auth/sign-up', [
-    body('email', 'This email address is taken')
+    body('email')
+        .notEmpty()
         .isEmail()
         .trim()
         .toLowerCase()
@@ -73,6 +76,7 @@ app.post('/auth/sign-up', [
             if (user) throw new Error('This email address is taken');
         }),
     body('password', 'Your password must be atleast 7 characters long')
+        .notEmpty()
         .isLength({ min: 7 }),
     body('firstName', 'You must provide your first name')
         .notEmpty()
@@ -84,6 +88,7 @@ app.post('/auth/sign-up', [
     body('tos', 'You must accept the Terms of Service to use this platform')
         .exists()
         .notEmpty(),
+    middleware.hCaptcha,
 ], async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -93,6 +98,11 @@ app.post('/auth/sign-up', [
         const userID = uuidv4();
         const groupID = uuidv4();
         const ucFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+        const nameArr = data.firstName.split(' ');
+        if (!data.lastName && nameArr.length >= 2) {
+            data.firstName = nameArr[0];
+            data.lastName = nameArr[1];
+        }
         if (!data.lastName) data.lastName = '';
         if (!data.groupName) data.groupName = data.firstName.concat("'s Team");
 
@@ -137,10 +147,7 @@ app.post('/auth/sign-up', [
  * 
  * Verify Email
  */
-app.get('/auth/verify-email', [
-
-], async (req, res) => {
-
+app.get('/auth/verify-email', async (req, res) => {
     const user = await User.findOne({
         where: {
             emailVerificationKey: req.params.emailVerificationKey
@@ -167,13 +174,14 @@ app.get('/auth/verify-email', [
  * Forgot Password
  */
 app.post('/auth/forgot', [
-    body('email', 'You must provide a valid email address')
+    body('email')
         .isEmail()
         .toLowerCase()
         .custom(async (email) => {
             const user = await User.findOne({ where: { email } });
             if (!user) throw new Error('This email address does not exist');
         }),
+    middleware.hCaptcha,
 ], async (req, res) => {
 
     const errors = validationResult(req);
@@ -222,7 +230,7 @@ app.get('/auth/get-user-by-reset-key/:passwordResetKey', async (req, res) => {
  * Update User's Password
  */
 app.post('/auth/reset', [
-    body('email', 'You must provide a valid email address')
+    body('email')
         .isEmail()
         .toLowerCase()
         .custom(async (email) => {
@@ -236,6 +244,7 @@ app.post('/auth/reset', [
             const user = await User.findOne({ where: { passwordResetKey } });
             if (!user) throw new Error('This link has expired');
         }),
+    middleware.hCaptcha,
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
@@ -299,6 +308,7 @@ app.post('/auth/invite', [
     body('tos', 'You must accept the Terms of Service to use this platform')
         .exists(),
     body('inviteKey').exists(),
+    middleware.hCaptcha,
 ], async (req, res) => {
     try {
         const errors = validationResult(req);

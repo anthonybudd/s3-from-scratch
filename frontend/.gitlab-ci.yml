@@ -1,0 +1,20 @@
+stages:
+  - build
+
+build-job:
+  image: docker:dind
+  stage: build
+  services:
+    - docker:dind
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    VITE_API_URL: http://s3-api.anthonybudd.io/api/v1
+    VITE_S3_ROOT: s3.anthonybudd.io
+  before_script:
+    - apk --update add nodejs npm
+  script:
+    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - npm install
+    - npm run build
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG

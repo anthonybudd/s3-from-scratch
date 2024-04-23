@@ -15,11 +15,12 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [Nodes](./sections/node.md)
 - [Source Control: GitLab](./sections/gitlab.md)
 - [K3s: Production Cluster](./sections/production-cluster.md)
-- [Deploying From GitLab Registry To Prod K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
+- [Deploying From GitLab Registry To Local K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
 - [K3s: Storage Cluster](./sections/storage-cluster.md)
 - [Automated Bucket Deployment](./sections/automated-bucket-deployment.md)
 - [API](./api/ReadMe.md)
 - [Frontend](./frontend/ReadMe.md)
+- [Connecting to the Internet](./sections/internet.md)
 <!-- - [Website](./website/ReadMe.md) -->
 <!-- - [Networking](./sections/networking.md) -->
 
@@ -30,15 +31,21 @@ Because this is still very much a work-in-progress you will see my notes in ital
 
 ### Technical Overview
 
+#### [Node](./sections/node.md)
+<img height="200" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/node.png">
+
+Since this project needs to be "Enterprise-grade" we need a distinct and replicable compute unit that we can buy and build in bulk. I all this a "Node" which is a Raspberry Pi with a 1TB SSD and POE hat. I have also 3D printed a rack-mount solution (Source: [Merocle From UpTimeLabs](https://www.thingiverse.com/thing:4756812), Files: [./node/rack-mount-mk3.zip](./node/))2 for easy install into the rack. 
+
 #### [Console](./sections/console.md)
 <img height="200" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/console-close-up.png">
 
 We will need a "console" so we can locally interact with the infrastructure. I have tried using a Raspberry Pi with a monitor and keyboard attached but I have found that using an old MacBook Pro works best for this. In this section I explain how to set-up the console so you can use it to store secrets, manage the network, provision K3s clusters and deploy pods.
 
-#### [Node](./sections/node.md)
-<img height="200" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/node.png">
+#### [Frontend](./frontend/ReadMe.md)
+<img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/frontend.gif">
 
-Since this project needs to be "Enterprise-grade" we need a distinct and replicable compute unit which I call a "node". A node is a Raspberry Pi with a 1TB SSD and POE hat. I have also 3D printed a rack-mount solution for easy install into the rack. 
+This represents the AWS management console found at [aws.amazon.com/console](https://aws.amazon.com/console/). This is a Vue.js static frontend SPA that makes HTTP requests to the [S3 REST API](./api/ReadMe.md) for users to create, manage and delete their S3 buckets.
+
 
 #### [API](./api/ReadMe.md)
 ```sh
@@ -51,13 +58,8 @@ curl -X POST \
 This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
 
 
-#### [Frontend](./frontend/ReadMe.md)
-<img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/front-end-shadow.png">
-
-This represents the AWS management console found at [aws.amazon.com/console](https://aws.amazon.com/console/). This is a Vue.js static frontend SPA that makes HTTP requests to the [S3 REST API](./api/ReadMe.md) for users to create, manage and delete their S3 buckets.
-
 #### [Networking](./sections/networking.md)
-<img height="75" src="hattps://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt.png">
+<img height="75" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/openwrt_.png">
 
 We will need a network for the nodes to communicate. For the a router I have chosen OpenWRT. This allows me to use a Raspberry Pi with a USB 3.0 Ethernet adapter so it can work as as a router between the internet and the “datacenter”.
 

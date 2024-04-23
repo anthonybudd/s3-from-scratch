@@ -1,5 +1,6 @@
 <template>
     <router-view v-if="isLoaded" />
+    <notifications />
 </template>
 
 <script setup>
@@ -12,7 +13,7 @@ const store = useStore();
 const isLoaded = ref(false);
 
 onMounted(async () => {
-    const skipAuthPages = ['/login']; // Auth not needed on these pages
+    const skipAuthPages = ['/login', '/sign-up']; // Auth not needed on these pages
     const skipAuth = new RegExp(skipAuthPages.join('|')).test(window.location.href);
 
     if (skipAuth) {

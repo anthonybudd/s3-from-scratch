@@ -41,6 +41,8 @@ spec:
             mountPath: "/app/config"
             subPath: storage-config
           env:
+          - name: S3_ROOT
+            value: "s3.anthonybudd.io"
           - name: NODE_ENV
             value: "production"
           - name: FRONTEND_URL
@@ -66,3 +68,7 @@ spec:
               secretKeyRef:
                 name: s3-api-secrets
                 key: DB_PASSWORD
+          - name: HCAPTCHA_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: HCAPTCHA_SECRET

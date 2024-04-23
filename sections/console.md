@@ -73,10 +73,10 @@ To make life easier, add an environment variable and an alias command for each o
 ```sh
 [Console] nano ~/.zshrc
 
-export SSHN1=10.0.0.XXX
-alias sshn1="ssh node@$SSHN1"
+export N1IP=10.0.0.XXX
+alias sshn1="ssh node@$N1IP"
 
-export SSHN2=10.0.0.XXX
-alias sshn2="ssh node@$SSHN2"
+export N2IP=10.0.0.XXX
+alias sshn2="ssh node@$N2IP"
 ...
 ```

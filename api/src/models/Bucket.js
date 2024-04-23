@@ -32,6 +32,14 @@ module.exports = db.define('Bucket', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    status: { // Provisioning, ProvisioningFailed, Provisioned, Deprovisioning, Deprovisioned
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    endpoint: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
 
     createStdout: {
         type: Sequelize.TEXT,
