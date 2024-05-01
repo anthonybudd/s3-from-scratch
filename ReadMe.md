@@ -6,7 +6,7 @@
 
 For the past few years I’ve been thinking about how I could build SaaS and deploy it on my own infrastructure without needing to use any cloud platforms like AWS or GCP. In this repo I document my progress on building a clone of AWS S3 that functions the same as S3 (automated bucket deployment, dynamically expanding volumes, security, etc) using an exclusively open-source technology stack.
 
-### Live Demo: [S3.AnthonyBudd.io](https://s3.anthonybudd.io)
+### Live Demo: [s3.AnthonyBudd.io](https://s3.anthonybudd.io)
 
 <p align="center">
   <img width="500" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/live-demo.gif">
@@ -49,8 +49,8 @@ We will need a "console" so we can locally interact with the infrastructure. I h
 ### [Frontend](./frontend/ReadMe.md)
 <img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/frontend.gif">
 
-#### Live: [S3.AnthonyBudd.io](https://s3.anthonybudd.io)
-This represents the AWS management console found at [aws.amazon.com/console](https://aws.amazon.com/console/). This is a Vue.js static frontend SPA that makes HTTP requests to the [S3 REST API](./api/ReadMe.md) for users to create, manage and delete their S3 buckets.
+#### Live: [s3.AnthonyBudd.io](https://s3.anthonybudd.io)
+This represents the AWS management console found at [aws.amazon.com/console](https://aws.amazon.com/console/). This is a Vue.js SPA that makes HTTP requests to the [S3 REST API](./api/ReadMe.md) for users to create, manage and delete their S3 buckets.
 
 
 ### [API](./api/ReadMe.md)
@@ -62,7 +62,7 @@ curl -X POST \
     https://s3-api.anthonybudd.io/buckets
 ```
 
-#### Live: [S3-api.AnthonyBudd.io](https://s3-api.anthonybudd.io/api/v1/_healthcheck)
+#### Live: [s3-api.AnthonyBudd.io](https://s3-api.anthonybudd.io/api/v1/_healthcheck)
 This API simulates the back-end of the AWS Console. A user can sign-up, login, create a bucket then delete the bucket.
 
 ### [Networking](./sections/networking.md)

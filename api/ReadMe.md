@@ -4,6 +4,11 @@ This API simulates the back-end of the AWS Console. A user can sign-up, login, c
 
 This API was built using my project [anthonybudd/express-api-boilerplate.](https://github.com/anthonybudd/express-api-boilerplate)
 
+### Main Files
+- Auth Controller: [./src/routes/Auth.js](./src/routes/auth.js)
+- Bucket Controller: [./src/routes/Buckets.js](./src/routes/Buckets.js)
+- Model: [./src/models/Bucket.js](./src/models/Bucket.js)
+
 
 ### Set-up
 ```
