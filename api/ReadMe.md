@@ -1,19 +1,34 @@
 # S3 API
 
+This API simulates the back-end of the AWS Console. A user can sign-up, login, create a bucket then delete the bucket.
 
-This API was built using my [Express API Boilerplate](https://github.com/anthonybudd/express-api-boilerplate)
+This API was built using my project [anthonybudd/express-api-boilerplate.](https://github.com/anthonybudd/express-api-boilerplate)
 
-The S3 API is for users of S3 to create and delete buckets. This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
+
+### Set-up
+```
+cp .env.example .env
+npm install
+
+# Private RSA key for JWT signing
+openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+
+# Start the app
+docker compose up
+npm run _db:refresh
+npm run _test
+```
 
 
 ### Routes
 | Method      | Route                            | Description                           | Payload                               | Response          | 
 | ----------- | -------------------------------- | ------------------------------------- | ------------------------------------- | ----------------- |  
-| **Bucket**  |                                  |                                       |                                       |                   |  
+| **Buckets**  |                                  |                                       |                                       |                   |  
 | GET         | `/api/v1/buckets`                | Get all buckets for the current user  | --                                    | [Bucket, Bucket]  |  
 | POST        | `/api/v1/buckets`                | Create new bucket                     | { name: "test-bucket" }               | {Bucket}          |  
 | GET         | `/api/v1/buckets/:bucketID`      | Get a single bucket                   | --                                    | {Bucket}          |  
-| DELETE      | `/api/v1/buckets/:bucketID`      | Returns HTTP 202 {id}                 | --                                    | {id: bucketID}    |  
+| DELETE      | `/api/v1/buckets/:bucketID`      | Returns HTTP 202 {id}                 | --                                    | {bucketID}    |  
 | **Auth**    |                                  |                                       |                                       |                   |  
 | POST        | `/api/v1/auth/login`             | Login                                 | {email, password}                     | {accessToken}     |  
 | POST        | `/api/v1/auth/sign-up`           | Sign-up                               | {email, password, firstName, tos}     | {accessToken}     |  
