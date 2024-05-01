@@ -53,6 +53,15 @@ Install OpenVPN onto the master node of the prod-cluster
 [Node X] apt-get install openvpn -y
 ```
 
+Make .ovpn file for node
+
+```
+[Console] /etc/openvpn/server/easy-rsa
+./easyrsa gen-req nodeX nopass
+./easyrsa sign-req cleint nodeX
+
+```
+
 Update the openvpn config 
 
 ```

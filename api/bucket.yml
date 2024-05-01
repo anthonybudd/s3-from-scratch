@@ -58,7 +58,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: NAMESPACE.minio.local
+  - host: NAMESPACE.s3.anthonybudd.io
     http:
       paths:
       - path: /

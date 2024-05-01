@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('./../providers/db');
+const { exec } = require('child_process');
 
-module.exports = db.define('Bucket', {
+const Bucket = db.define('Bucket', {
     id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -68,3 +69,23 @@ module.exports = db.define('Bucket', {
         }
     },
 });
+
+Bucket.prototype.sync = async function () {
+    exec(`kubectl --kubeconfig=${process.env.K8S_CONFIG_PATH} -n ${this.name} get pvc --no-headers -o custom-columns=":status.phase" `, (err, stdout, stderr) => {
+        if (err) console.error(err);
+
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+
+        switch (stdout.trim()) {
+            case 'Pending':
+                this.update({ status: 'Provisioning' });
+                break;
+            case 'Bound':
+                this.update({ status: 'Provisioned' });
+                break;
+        }
+    });
+};
+
+module.exports = Bucket;

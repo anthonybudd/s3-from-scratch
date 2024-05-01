@@ -6,9 +6,12 @@
 
 For the past few years I’ve been thinking about how I could build SaaS and deploy it on my own infrastructure without needing to use any cloud platforms like AWS or GCP. In this repo I document my progress on building a clone of AWS S3 that functions the same as S3 (automated bucket deployment, dynamically expanding volumes, security, etc) using an exclusively open-source technology stack.
 
+## Live Demo: [S3.AnthonyBudd.io](https://s3.anthonybudd.io)
+
 <p align="center">
-  <img src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=4">
+  <img width="500" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/live-demo.gif">
 </p>
+
 
 ### Sections
 - [Console](./sections/console.md)
@@ -21,8 +24,10 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [API](./api/ReadMe.md)
 - [Frontend](./frontend/ReadMe.md)
 - [Connecting to the Internet](./sections/internet.md)
-<!-- - [Website](./website/ReadMe.md) -->
-<!-- - [Networking](./sections/networking.md) -->
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=4">
+</p>
 
 ### Notes
 You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Console]` and `[Node X]`.
@@ -44,6 +49,7 @@ We will need a "console" so we can locally interact with the infrastructure. I h
 #### [Frontend](./frontend/ReadMe.md)
 <img height="250" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/frontend.gif">
 
+#### Live: [S3.AnthonyBudd.io](https://s3.anthonybudd.io)
 This represents the AWS management console found at [aws.amazon.com/console](https://aws.amazon.com/console/). This is a Vue.js static frontend SPA that makes HTTP requests to the [S3 REST API](./api/ReadMe.md) for users to create, manage and delete their S3 buckets.
 
 
@@ -53,8 +59,10 @@ curl -X POST \
     -H 'Authorization: Bearer $JWT' \
     -H 'Content-Type: application/json' \
     -d '{ "name":"s3-test-bucket"}' \
-    https://s3.anthonybudd.io/buckets
+    https://s3-api.anthonybudd.io/buckets
 ```
+
+#### Live: [S3-api.AnthonyBudd.io](https://s3-api.anthonybudd.io)
 This API simulates the back-end of AWS, a user can sign-up, login, create a bucket then delete the bucket.
 
 

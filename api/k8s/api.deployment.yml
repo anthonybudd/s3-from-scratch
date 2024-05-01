@@ -37,18 +37,20 @@ spec:
           - name: s3-api-jwt-secret
             mountPath: "/app/public.pem"
             subPath: public.pem
-          - name: storage-cluster-config
+          - name: storage-k8s-config
             mountPath: "/app/config"
             subPath: storage-config
           env:
           - name: S3_ROOT
             value: "s3.anthonybudd.io"
+          - name: K8S_CONFIG_PATH
+            value: "/app/k8s-config"
           - name: NODE_ENV
             value: "production"
           - name: FRONTEND_URL
-            value: "https://app.EXAMPLE.COM"
+            value: "https://s3.anthonybudd.io"
           - name: BACKEND_URL
-            value: "https://api.EXAMPLE.COM/api/v1"
+            value: "https://s3-api.anthonybudd.io/api/v1"
           - name: PORT
             value: "80"
           - name: PRIVATE_KEY_PATH
@@ -71,4 +73,5 @@ spec:
           - name: HCAPTCHA_SECRET
             valueFrom:
               secretKeyRef:
+                name: s3-api-secrets
                 key: HCAPTCHA_SECRET

@@ -12,7 +12,7 @@ console.log('*');
 console.log('* ENV');
 console.log(`* NODE_ENV: ${process.env.NODE_ENV}`);
 console.log(`* TEMP_FILE_DIR: ${process.env.TEMP_FILE_DIR}`);
-if (!process.env.H_CAPTCHA_SECRET) console.log(`* H_CAPTCHA_SECRET: null ⚠️ Login/Sign-up requests will not require captcha validadation!`);
+if (!process.env.H_CAPTCHA_SECRET) console.log(`* H_CAPTCHA_SECRET: null ⚠️  Login/Sign-up requests will not require captcha validadation!`);
 console.log('*');
 console.log('*');
 

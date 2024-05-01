@@ -1,6 +1,6 @@
 const { body, validationResult, matchedData } = require('express-validator');
 const errorHandler = require('./../providers/errorHandler');
-const { Bucket, Group } = require('./../models');
+const { Bucket, Blacklist } = require('./../models');
 const middleware = require('./middleware');
 const { exec } = require('child_process');
 const bcrypt = require('bcrypt-nodejs');
@@ -21,13 +21,11 @@ app.get('/buckets', [
     passport.authenticate('jwt', { session: false })
 ], async (req, res) => {
     try {
-        const buckets = await Bucket.findAll({
+        return res.json(await Bucket.findAll({
             where: {
                 userID: req.user.id,
             }
-        });
-
-        return res.json(buckets);
+        }));
     } catch (error) {
         errorHandler(error, res);
     }
@@ -41,6 +39,17 @@ app.get('/buckets', [
  */
 app.post('/buckets', [
     passport.authenticate('jwt', { session: false }),
+    body('name')
+        .notEmpty()
+        .toLowerCase()
+        .custom(async (value) => {
+            const blacklist = await Blacklist.findOne({ where: { value } });
+            if (blacklist) throw new Error('This bucket name is not allowed');
+        })
+        .custom(async (name) => {
+            const exists = await Bucket.findOne({ where: { name } });
+            if (exists) throw new Error('Bucket already exists.');
+        }),
     body('name').exists().customSanitizer(string => string.toString().trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "")),
 ], async (req, res) => {
     try {
@@ -48,15 +57,9 @@ app.post('/buckets', [
         if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
         const data = matchedData(req);
 
-        const exists = await Bucket.findOne({ where: { name: data.name } });
-        if (exists) return res.status(422).json({
-            msg: `Bucket already exists.`,
-            code: 97924,
-        });
-
         const generateAccessKeyID = () => {
             const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz23456789';
-            const length = 16;
+            const length = 20;
             let randomString = '';
             for (let i = 0; i < length; i++) {
                 const randomIndex = Math.floor(Math.random() * charSet.length);
@@ -98,7 +101,7 @@ app.post('/buckets', [
                 fs.writeFile(path, result, 'utf8', (err) => {
                     if (err) throw err;
 
-                    exec(`kubectl --kubeconfig=/app/config apply -f ${path}`, (err, stdout, stderr) => {
+                    exec(`kubectl --kubeconfig=${process.env.K8S_CONFIG_PATH} apply -f ${path}`, (err, stdout, stderr) => {
                         if (err) console.error(err);
 
                         console.log(`stdout: ${stdout}`);
@@ -136,7 +139,7 @@ app.delete('/buckets/:bucketID', [
     try {
         const bucket = await Bucket.findByPk(req.params.bucketID);
 
-        exec(`kubectl --kubeconfig=/app/config -n ${bucket.name} delete pod/minio-pod service/minio-svc ingress/minio-ing persistentvolumeclaim/minio-pvc`, (err, stdout, stderr) => {
+        exec(`kubectl --kubeconfig=${process.env.K8S_CONFIG_PATH} -n ${bucket.name} delete pod/minio-pod service/minio-svc ingress/minio-ing persistentvolumeclaim/minio-pvc`, (err, stdout, stderr) => {
             if (err) console.error(err);
 
             console.log(`stdout: ${stdout}`);
@@ -150,7 +153,7 @@ app.delete('/buckets/:bucketID', [
 
         await bucket.destroy();
 
-        return res.json({ id: bucketID });
+        return res.json({ id: req.params.bucketID });
     } catch (error) {
         return errorHandler(error, res);
     }

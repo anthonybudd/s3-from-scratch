@@ -3,7 +3,7 @@ const hCaptcha = require('./../../providers/hCaptcha');
 module.exports = async (req, res, next) => {
 
     if (!process.env.H_CAPTCHA_SECRET) {
-        console.log(`⚠️ Warning: H_CAPTCHA_SECRET not set, skipping captcha validadation`);
+        console.log(`⚠️  Warning: H_CAPTCHA_SECRET not set, skipping captcha validadation`);
         return next();
     }
 

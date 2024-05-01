@@ -9,6 +9,7 @@
                 required
                 @keyup="onKeyUpBucketName"
                 @keydown.enter.prevent="onClickCreateBucket"
+                :error-messages="(errors.name) ? [errors.name.msg] : []"
             ></v-text-field>
         </v-card-text>
 
@@ -27,24 +28,34 @@
 
 <script setup>
 import { useNotification } from "@kyvg/vue3-notification";
-import { defineEmits, ref } from 'vue';
+import { defineEmits, ref, inject } from 'vue';
 import api from './../api';
+
 
 const { notify } = useNotification();
 const emit = defineEmits(['showsidebar']);
+const errorHandler = inject('errorHandler');
+const errors = ref({});
 const loading = ref(false);
 const bucketName = ref('');
 
 const onClickCreateBucket = async () => {
-    loading.value = true;
-    const { data: bucket } = await api.buckets.create({
-        name: bucketName.value,
-    });
-    emit('onCreateBucket', bucket);
-    notify({
-        title: 'Bucket Created'
-    });
-    loading.value = false;
+    try {
+        loading.value = true;
+        const { data: bucket } = await api.buckets.create({
+            name: bucketName.value,
+        });
+        emit('onCreateBucket', bucket);
+        notify({
+            title: 'Bucket Created'
+        });
+    } catch (error) {
+        errorHandler(error, (data, code) => {
+            if (code === 422) errors.value = data.errors;
+        });
+    } finally {
+        loading.value = false;
+    }
 };
 
 const onKeyUpBucketName = async () => {

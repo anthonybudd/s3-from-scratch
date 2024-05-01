@@ -17,7 +17,7 @@ automation-test/
 We will need to expose our storage clusters config file to a pod inside the prod cluster. We can do this with a secret.
 
 ```
-[Console] kubectl --kubeconfig=.kube/config create secret generic storage-cluster-config --from-file=.kube/storage-config
+[Console] kubectl --kubeconfig=.kube/config create secret generic storage-k8s-config --from-file=.kube/storage-config
 ```
 
 

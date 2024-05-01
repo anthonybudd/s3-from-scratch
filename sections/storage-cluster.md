@@ -153,10 +153,10 @@ node
 Mount the disks and reboot to see if the drives have been mounted successfully
 
 ```
-[Console] ansible -i ansible/inventory/storage-cluster/hosts.ini master -b -m ansible.posix.mount -a "path=/ssd src=UUID={{ var_uuid }} fstype=ext4 state=mounted"
+[Console] ansible -i ansible/inventory/storage-cluster/hosts.ini k3s_cluster -b -m ansible.posix.mount -a "path=/ssd src=UUID={{ var_uuid }} fstype=ext4 state=mounted"
 
-[Console] ansible -i ansible/inventory/storage-cluster/hosts.ini master -b -m shell -a "sudo reboot"
-[Console] ansible -i ansible/inventory/storage-cluster/hosts.ini master -b -m shell -a "lsblk -f"
+[Console] ansible -i ansible/inventory/storage-cluster/hosts.ini k3s_cluster -b -m shell -a "sudo reboot"
+[Console] ansible -i ansible/inventory/storage-cluster/hosts.ini k3s_cluster -b -m shell -a "lsblk -f"
 
 10.0.0.XXX | CHANGED | rc=0 >>
 NAME        FSTYPE FSVER LABEL  UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
@@ -181,9 +181,9 @@ mmcblk0
 ### Install Longhorn
 
 ```
-[Console] kubectl --kubeconfig=.kube/storage-cluster apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.6.1/deploy/longhorn.yaml
+[Console] kubectl --kubeconfig=.kube/storage-config apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.6.1/deploy/longhorn.yaml
 
-[Console] kubectl --kubeconfig=.kube/storage-cluster  get pods \
+[Console] kubectl --kubeconfig=.kube/storage-config get pods \
     --namespace longhorn-system \
     --watch
 ```

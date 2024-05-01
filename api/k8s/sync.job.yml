@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sync
+  namespace: s3-api
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+          - name: storage-k8s-config
+            secret:
+              secretName: storage-k8s-config 
+          containers:
+          - name: s3-api
+            image: gitlab.local:5050/anthonybudd/api:main
+            imagePullPolicy: Always
+            command:
+            - /bin/bash
+            - -c
+            - "node /app/src/scripts/sync.js"
+            volumeMounts:
+            - name: storage-k8s-config
+              mountPath: "/app/storage-config"
+              subPath: storage-config
+            env:
+            - name: S3_ROOT
+              value: "s3.anthonybudd.io"
+            - name: K8S_CONFIG_PATH
+              value: "/app/storage-config"
+            - name: NODE_ENV
+              value: "production"
+            - name: FRONTEND_URL
+              value: "https://s3.anthonybudd.io"
+            - name: BACKEND_URL
+              value: "https://s3-api.anthonybudd.io/api/v1"
+            - name: PORT
+              value: "80"
+            - name: DB_HOST
+              value: "s3-db"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USERNAME
+              value: "app"
+            - name: DB_DATABASE
+              value: "app"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: s3-api-secrets
+                  key: DB_PASSWORD
+            - name: HCAPTCHA_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: s3-api-secrets
+                  key: HCAPTCHA_SECRET

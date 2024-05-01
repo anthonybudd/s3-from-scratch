@@ -2,6 +2,7 @@ const User = require('./User');
 const Group = require('./Group');
 const GroupsUsers = require('./GroupsUsers');
 const Bucket = require('./Bucket');
+const Blacklist = require('./Blacklist');
 
 
 User.belongsToMany(Group, {
@@ -20,5 +21,6 @@ module.exports = {
     User,
     Group,
     GroupsUsers,
-    Bucket, // AB: gen
+    Bucket,
+    Blacklist,
 };
