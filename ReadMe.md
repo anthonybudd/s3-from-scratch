@@ -16,13 +16,14 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 const { S3Client, ListObjectsV2Command, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 const Bucket = 'BUCKET_NAME_HERE';
+const Namespace = 'NAMESPACE_HERE';
 const accessKeyId = "xxxxxxxxxxxxxxxxxxxx";
 const secretAccessKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
 (async function () {
     const client = new S3Client({
         region: 'us-west-2',
-        endpoint: `http://${Bucket}.${Bucket}.s3.anthonybudd.io`,
+        endpoint: `https://${Bucket}.${Namespace}.s3.anthonybudd.io`,
         forcePathStyle: true,
         sslEnabled: true,
         credentials: {
@@ -43,7 +44,7 @@ const secretAccessKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     const { Contents } = await client.send(new ListObjectsV2Command({ Bucket }));
     console.log("Bucket Contents:");
-    console.log(Contents);
+    console.log(Contents.map(({ Key }) => Key).join("\n"));
 })();
 ```
 
