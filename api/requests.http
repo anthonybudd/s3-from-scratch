@@ -3,7 +3,7 @@
 
 @host=http://localhost:8888/api/v1
 # @host=http://api.local/api/v1
-@AccessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpZCI6ImM0NjQ0NzMzLWRlZWEtNDdkOC1iMzVhLTg2ZjMwZmY5NjE4ZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImZpcnN0TmFtZSI6IlVzZXIiLCJsYXN0TmFtZSI6Ik9uZSIsImlhdCI6MTcxMjg5NDI5NywiZXhwIjozNDI1ODc0OTk0fQ.O4XnEFAlh-08RSfBECB4s2xxf-dWBDqo4KFJGH_2kWm-A1gM_eELgA1eM_yxxpStjIFLJ_NAUPf8W1zN1gyKk2-zCBIG17Q4eW-8iKMLAGQUsRsRq8B1KPt8oQXl5Wx-VqFfoLAZNl_OLniaOwGj8BmqEnU74_FVw8PCBN5AhGcme1An5MmsIBp3kWezZ5g4ZHVIKfKmWEWUxjhVVclkHn3OrLMIeQUKxBdEDEgSRTJRXYJAycnzxZX9QtOgQO1G_aBzNbocUKOgyEE5OKTNJ7hONijENLCNv8LbKr0Wg3a0e1gYY4Y8FszQsvbjTTYVJbz2dey5qYfLcvSjCO2S4w
+@AccessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpZCI6ImM0NjQ0NzMzLWRlZWEtNDdkOC1iMzVhLTg2ZjMwZmY5NjE4ZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImZpcnN0TmFtZSI6IlVzZXIiLCJsYXN0TmFtZSI6Ik9uZSIsImlhdCI6MTcxNTIxMzk0MiwiZXhwIjozNDMwNTE0MjgzfQ.khGH3zHxztsWmpwL9bWpwGr_VXcPFxGTCtgoCYJq9tz0H638kWKH_k_zLgjCQ1rD6N0fWh31pTE4l53RgUGz2iL8lAoYmq0ScwSgMmiWMKm6d1vxaN3UK0CivvZPku2Pn4MQ6p12xrfRxTUVCzxI_xP9hHEhG1VUbCA07JJnl-OJFQCwYVQWCmdK5daFe8wybddYLUCG0oAGpy7Kaf0_CBbJAeIccVCKI7fILgBxowVTwl7nqruzr3-k0biXuitkegNfHPyPwbs4AvIIYxdyLXZiT-Zz0JUazphQZncw4WBqB_PX4Eyoflf8xzQNRtgvdV3ANc6ZKeMG05jAp1IV3A
 
 ###########################################
 # Auth
@@ -34,7 +34,8 @@ Authorization: Bearer {{AccessToken}}
 content-type: application/json
 
 {
-    "name": "x-test"
+    "namespace": "x--xxctest",
+    "name": "x-0testx"
 }
 
 ### Delete Bucket

@@ -26,32 +26,34 @@ module.exports = {
             allowNull: true,
         },
 
+        namespace: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
         name: {
             type: Sequelize.STRING,
             allowNull: false,
         },
+
         status: {
             type: Sequelize.STRING,
             allowNull: false,
+        },
+        bucketCreated: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
         },
         endpoint: {
             type: Sequelize.STRING,
             allowNull: false,
         },
 
-        createStdout: {
+        stdout: {
             type: Sequelize.TEXT,
             allowNull: true,
         },
-        createStderr: {
-            type: Sequelize.TEXT,
-            allowNull: true,
-        },
-        deleteStdout: {
-            type: Sequelize.TEXT,
-            allowNull: true,
-        },
-        deleteStderr: {
+        stderr: {
             type: Sequelize.TEXT,
             allowNull: true,
         },

@@ -53,16 +53,7 @@
                         <p class="my-4">
                             <b>{{ item.name }}</b><br>
                             <small class="d-none d-sm-flex">
-                                <a
-                                    v-if="item.status === 'Provisioned'"
-                                    target="_blank"
-                                    :href="`http://${item.endpoint}`"
-                                >
-                                    {{ item.endpoint }}
-                                </a>
-                                <span v-else>
-                                    {{ item.endpoint }}
-                                </span>
+                                {{ item.endpoint }}
                             </small>
                         </p>
                     </template>
@@ -111,6 +102,7 @@
                         >
                             <template v-slot:activator="{ props: activatorProps }">
                                 <v-btn
+                                    v-if="item.status !== 'Provisioning'"
                                     v-bind="activatorProps"
                                     size="small"
                                     variant="tonal"
@@ -135,6 +127,7 @@
                                         density="compact"
                                         max-width="200"
                                         class="mt-2"
+                                        @keydown.enter.prevent="deleteBucket(item)"
                                     ></v-text-field>
                                 </v-card-text>
                                 <template v-slot:actions>

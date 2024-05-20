@@ -56,13 +56,22 @@
                     <template v-slot:label>
                         <div>
                             I agree to the
-                            <a
-                                href="#"
-                                target="_blank"
-                                @click.stop
-                            >
-                                Terms of Service
-                            </a>
+
+
+                            <v-dialog max-width="800">
+                                <template v-slot:activator="{ props }">
+                                    <span
+                                        v-bind="props"
+                                        class="link"
+                                    >
+                                        Terms of Service
+                                    </span>
+                                </template>
+
+                                <template v-slot:default="{}">
+                                    <TermsOfService></TermsOfService>
+                                </template>
+                            </v-dialog>
                         </div>
                     </template>
                 </v-checkbox>
@@ -106,6 +115,7 @@ import VueHcaptcha from '@hcaptcha/vue3-hcaptcha';
 import { ref, inject } from 'vue';
 import api from './../api';
 import router from "@/plugins/router";
+import TermsOfService from './../components/TermsOfService.vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 

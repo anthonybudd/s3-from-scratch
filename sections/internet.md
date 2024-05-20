@@ -48,49 +48,38 @@ Press any key to continue...
 [OpenVPNServer] sudo systemctl restart openvpn-server@server.service
 ```
 
-Install OpenVPN onto the master node of the prod-cluster
+### Node Set-up
+
+Install OpenVPN onto the master node of each cluster
 ```
 [Node X] apt-get install openvpn -y
 ```
 
-Make .ovpn file for node
-
-```
-[Console] /etc/openvpn/server/easy-rsa
-./easyrsa gen-req nodeX nopass
-./easyrsa sign-req cleint nodeX
-
-```
-
-Update the openvpn config 
-
-```
-[Node X] nano /etc/openvpn/???
-
-"node-1"
-```
-
-_AB test `sudo systemctl enable openvpn@node-1`_
-
-_AB: This is probbably not that good of a set-up, i should probably improve this by moving openVPN to the OpenWRT raspberry pi_
-
-In the console copy the auto-generated config file 
-
+Make a .ovpn config file on the VPN server and SCP it to the node
 ```
 [Console] scp root@OPEN_VPN_SERVER_IP:/etc/openvpn/???/node-1.ovpn /tmp
 mv /tmp/node-1.ovpn /tmp/node-1.config
 scp /tmp/node-1.config node@$N1IP:/etc/openvpn
 ```
-
+__Note:__ I'm deliberately renameing the file to .config, this is becasue the extension OpenVPN uses to autoload.
 _AB: Confirm file path_
 _AB: Add file to pass?_
 
-__Note:__ I'm deliberately renameing the file to .config, this is becasue the 
 
-### Install Nginx onto the OpenVPN server
+```
+[Node X] nano /etc/default/openvpn
 
+# Uncomment this line
+AUTOSTART="all"
+```
+
+_AB: This is probbably not that good of a set-up, i should probably improve this by moving openVPN to the OpenWRT raspberry pi_
+
+
+### Install Nginx on the OpenVPN server
 
 ```[OpenVPNServer] sudo apt install -y nginx```
+
 
 
 ```sh
@@ -99,6 +88,64 @@ __Note:__ I'm deliberately renameing the file to .config, this is becasue the
 PROD_CLUSTER_MASTER_NODE_IP      app.YOUR_DOMAIN.com
 PROD_CLUSTER_MASTER_NODE_IP      api.YOUR_DOMAIN.com
 ```
+
+/etc/nginx/nginx.conf
+```
+...
+stream {
+  map $ssl_preread_server_name $targetBackend {
+    s3.anthonybudd.io  10.8.0.3:443;
+    s3-api.anthonybudd.io  10.8.0.3:443;
+    echo.s3.anthonybudd.io  10.8.0.4:443;
+  }  
+
+  server {
+    listen     443;
+    proxy_pass $targetBackend;       
+    ssl_preread on;
+  }
+}
+...
+```
+
+aster.s3.YOUR_DOMAIN.com
+```sh
+server {
+    listen  80;
+    server_name ~^(?<subdomain>.+)\.s3\.anthonybudd\.io$;
+
+    location / {
+        proxy_set_header Host '$subdomain.s3.anthonybudd.io';
+        proxy_pass http://10.8.0.4;
+    }
+}
+```
+
+
+s3.YOUR_DOMAIN.com
+```sh
+server {
+    listen 80;
+    server_name s3.anthonybudd.io;
+    return 301 https://$host$request_uri;
+}
+```
+
+s3-api.YOUR_DOMAIN.com
+```sh
+server {
+    listen  80;
+    server_name s3-api.anthonybudd.io;
+    return 301 https://$host$request_uri;
+}
+```
+
+---
+
+
+
+
+
 
 ```sh
 [Proxy Node] sudo nano /etc/nginx/sites-available/s3.local
@@ -137,3 +184,9 @@ server {
     }
 }
 
+```
+
+
+```sh
+
+```

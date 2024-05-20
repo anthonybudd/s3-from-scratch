@@ -5,8 +5,10 @@ const insert = [{
     createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
     updatedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
     userID: 'c4644733-deea-47d8-b35a-86f30ff9618e',
+    namespace: 'test-bucket',
     name: 'test-bucket',
     status: 'Provisioned',
+    bucketCreated: 1,
     endpoint: `test-bucket.${process.env.S3_ROOT}`,
 }];
 

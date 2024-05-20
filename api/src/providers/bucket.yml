@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: NAMESPACE_HERE
+  labels:
+    name: NAMESPACE_HERE
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: minio-pod
+  name: minio-pod
+  namespace: NAMESPACE_HERE
+spec:
+  containers:
+  - name: minio-pod
+    image: quay.io/minio/minio:latest
+    env:
+    - name: MINIO_ROOT_USER
+      value: ROOTUSER
+    - name: MINIO_ROOT_PASSWORD
+      value: ROOTPASSWORD
+    - name: S3_NAMESPACE
+      value: NAMESPACE_HERE
+    - name: S3_BUCKET_NAME
+      value: BUCKETNAME_HERE
+    command:
+    - /bin/bash
+    - -c
+    args: 
+    - minio server /data --console-address :9001
+    ports:
+    - name: http
+      containerPort: 80
+    - name: https
+      containerPort: 443
+    - name: console
+      containerPort: 9001
+    - name: api
+      containerPort: 9000
+    volumeMounts:
+    - name: longhornvolume
+      mountPath: /data
+    - name: s3-create-bucket-script
+      mountPath: /s3-create-bucket-script
+  volumes:
+  - name: s3-create-bucket-script
+    configMap:
+      name: s3-create-bucket-script
+      defaultMode: 0777
+      items:
+      - key: create-bucket.sh
+        path: create-bucket.sh
+  - name: longhornvolume
+    persistentVolumeClaim:
+      claimName: minio-pvc
+---
+apiVersion: v1
+kind: Service  
+metadata:
+  name: minio-svc
+  namespace: NAMESPACE_HERE 
+spec:
+  selector:
+    app: minio-pod 
+  ports:
+  - name: http
+    protocol: TCP  
+    port: 80 
+    targetPort: 9001
+  - name: api
+    port: 9000
+    protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: NAMESPACE_HERE
+  name: minio-ing
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+  - hosts:
+    - NAMESPACE_HERE.s3.anthonybudd.io
+    secretName: NAMESPACE_HERE-s3-anthonybudd-io-cert
+  - hosts:
+    - BUCKETNAME_HERE.NAMESPACE_HERE.s3.anthonybudd.io
+    secretName: BUCKETNAME_HERE-NAMESPACE_HERE-s3-anthonybudd-io-cert
+  rules:
+  - host: NAMESPACE_HERE.s3.anthonybudd.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio-svc
+            port:
+              number: 80
+  - host: BUCKETNAME_HERE.NAMESPACE_HERE.s3.anthonybudd.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio-svc
+            port:
+              number: 9000
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: NAMESPACE_HERE
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: s3-create-bucket-script
+  namespace: NAMESPACE_HERE
+data:
+  create-bucket.sh: |
+    #!/bin/bash
+
+    mc alias set local http://localhost:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"
+    mc mb local/"$S3_BUCKET_NAME"

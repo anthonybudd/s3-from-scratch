@@ -2,6 +2,16 @@
     <v-card title="Create Bucket">
         <v-card-text>
             <v-text-field
+                v-model="namespace"
+                label="Namespace"
+                variant="outlined"
+                density="compact"
+                required
+                @keyup="onKeyUpNamespace"
+                @keydown.enter.prevent="onClickCreateBucket"
+                :error-messages="(errors.namespace) ? [errors.namespace.msg] : []"
+            ></v-text-field>
+            <v-text-field
                 v-model="bucketName"
                 label="Bucket Name"
                 variant="outlined"
@@ -37,12 +47,14 @@ const emit = defineEmits(['showsidebar']);
 const errorHandler = inject('errorHandler');
 const errors = ref({});
 const loading = ref(false);
+const namespace = ref('');
 const bucketName = ref('');
 
 const onClickCreateBucket = async () => {
     try {
         loading.value = true;
         const { data: bucket } = await api.buckets.create({
+            namespace: namespace.value,
             name: bucketName.value,
         });
         emit('onCreateBucket', bucket);
@@ -60,5 +72,9 @@ const onClickCreateBucket = async () => {
 
 const onKeyUpBucketName = async () => {
     bucketName.value = bucketName.value.replace(/[^a-zA-Z0-9-]/g, '');
+};
+
+const onKeyUpNamespace = async () => {
+    namespace.value = namespace.value.replace(/[^a-zA-Z0-9-]/g, '');
 };
 </script>
