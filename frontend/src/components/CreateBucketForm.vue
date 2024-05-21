@@ -30,7 +30,7 @@
                 color="primary"
                 @click="onClickCreateBucket"
                 :loading="loading"
-                :disabled="loading || bucketName.length < 4"
+                :disabled="loading || bucketName.length < 4 || namespace.length < 4"
             >Create</v-btn>
         </v-card-actions>
     </v-card>
