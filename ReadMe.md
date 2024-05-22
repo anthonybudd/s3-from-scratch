@@ -4,16 +4,19 @@
   <img width="300" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/s3.png">
 </p>
 
----
-
-## I got banned from Reddit. Cannot Reply to comments 🙃
-
-If you have questions, please make an issue or drop me an email.
-
----
-
-
 For the past few years I’ve been thinking about how I could build SaaS and deploy it on my own infrastructure without needing to use any cloud platforms like AWS or GCP. In this repo I document my progress on building a clone of AWS S3 that functions the same as S3 (automated bucket deployment, dynamically expanding volumes, security, etc) using an exclusively open-source technology stack.
+
+- [Console](./sections/console.md)
+- [Nodes](./sections/node.md)
+- [Source Control: GitLab](./sections/gitlab.md)
+- [K3s: Production Cluster](./sections/production-cluster.md)
+- [Deploying From GitLab Registry To Local K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
+- [K3s: Storage Cluster](./sections/storage-cluster.md)
+- [Automated Bucket Deployment](./sections/automated-bucket-deployment.md)
+- [API](./api/ReadMe.md)
+- [Frontend](./frontend/ReadMe.md)
+- [Connecting to the Internet](./sections/internet.md)
+
 
 ### Live POC working with `@aws-sdk/client-s3`: [s3.AnthonyBudd.io](https://s3.anthonybudd.io)
 
@@ -57,29 +60,10 @@ const secretAccessKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 })();
 ```
 
-
-### Sections
-- [Console](./sections/console.md)
-- [Nodes](./sections/node.md)
-- [Source Control: GitLab](./sections/gitlab.md)
-- [K3s: Production Cluster](./sections/production-cluster.md)
-- [Deploying From GitLab Registry To Local K3s Cluster](./sections/deploying-from-gitlab-to-k3s.md)
-- [K3s: Storage Cluster](./sections/storage-cluster.md)
-- [Automated Bucket Deployment](./sections/automated-bucket-deployment.md)
-- [API](./api/ReadMe.md)
-- [Frontend](./frontend/ReadMe.md)
-- [Connecting to the Internet](./sections/internet.md)
-
 ### Technical Overview
 <p align="center">
   <img src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/infrastructure.png?v=4">
 </p>
-
-### Notes
-You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Console]` and `[Node X]`.
-
-Because this is still very much a work-in-progress you will see my notes in italics "_AB:_" throughout, please ignore.
-
 
 ### [Node](./sections/node.md)
 <img height="200" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/node.png">
@@ -126,3 +110,8 @@ When you create an S3 bucket on AWS, everything is automated, there isn’t a hu
 ### [Resource Utilization](./sections/storage-cluster.md)
 Due to the scale of AWS it would not be financially practical to give each user their own dedicated server hardware, instead the hardware is virtualized, allowing multiple tenants to share a single physical CPU. Similarly it would not be practical to assign a whole node and SSD to each bucket, to maximize resource utilization my platform must be able to allow multiple tenants to share the pool of SSD storage space available. In addition, AWS S3 buckets can store an unlimited amount of data, so my platform will also need to allow a user to have a dynamically increasing volume that will auto-scale based on the storage space required.
 
+
+### Notes
+You will need to SSH into multiple devices simultaneously I have added an annotation (example: `[Console] nano /boot/config.txt`) to all commands in this repo, to show where you should be executing each command. Generally you will see `[Console]` and `[Node X]`.
+
+Because this is still very much a work-in-progress you will see my notes in italics "_AB:_" throughout, please ignore.
