@@ -1,9 +1,9 @@
 const { S3Client, ListObjectsV2Command, PutObjectCommand } = require("@aws-sdk/client-s3");
 
-const Bucket = 'testbkt';
-const Namespace = 'degarded2';
-const accessKeyId = "Q9QXuePWOuPlz5TDyHEk";
-const secretAccessKey = "bxiCIoc+Zmd6uwA/IY0e1BpLkHNc8MZ89AvoWahq";
+const Bucket = 'kjdoewl';
+const Namespace = 'gdiwk';
+const accessKeyId = "kUoZRWyhUae7tFZNduTS";
+const secretAccessKey = "qxYIqD/8WnvWYIkY7Rg7PSqSMrnxcVfBdpWgzz7z";
 
 (async function () {
     const client = new S3Client({
