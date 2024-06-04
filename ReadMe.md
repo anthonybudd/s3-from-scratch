@@ -18,7 +18,7 @@ For the past few years I’ve been thinking about how I could build SaaS and dep
 - [Connecting to the Internet](./sections/internet.md)
 
 
-### Live POC working with `@aws-sdk/client-s3`: [s3.AnthonyBudd.io](https://s3.anthonybudd.io)
+### Live POC working with `@aws-sdk/client-s3`
 
 <p align="center">
   <img width="500" src="https://raw.githubusercontent.com/anthonybudd/s3-from-scratch/master/_img/live-demo.gif">
